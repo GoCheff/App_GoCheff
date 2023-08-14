@@ -32,7 +32,7 @@
 <!-- TODO -->
 
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
-![Flutter](https://img.shields.io/badge/flutter-%23323330.svg?style=for-the-badge&logo=flutter&logoColor=%23F7DF1E)
+![Flutter](https://img.shields.io/badge/flutter-%23323330.svg?style=for-the-badge&logo=flutter&logoColor=%243BC8)
 
 <a name="usando"></a>
 
