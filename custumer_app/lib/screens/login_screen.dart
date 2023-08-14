@@ -8,11 +8,27 @@ class LoginScreen extends StatefulWidget{
 
 }
 class _LoginScreenState extends State <LoginScreen>{
-  
+  Color topColor = Colors.orange;
+  Color bottomColor = Color.fromRGBO(
+      214,
+      134,
+      60,
+      0.9
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.orangeAccent, Colors.white])),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  topColor,
+                  bottomColor
+                ]),
+        ),
      ),
     );
   }
