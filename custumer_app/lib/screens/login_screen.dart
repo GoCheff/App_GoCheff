@@ -15,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30) ,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -42,6 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              Form(
+                  child: Column(
+                    children: [TextFormField(autofocus: true,)],
+                  )
               )
             ],
           )),
