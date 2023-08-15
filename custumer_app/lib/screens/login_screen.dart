@@ -29,6 +29,19 @@ class _LoginScreenState extends State <LoginScreen>{
                   bottomColor
                 ]),
         ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+
+          children: [Text("Entrar", textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+
+          ),
+          )],
+        )
      ),
     );
   }
