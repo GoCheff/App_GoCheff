@@ -25,13 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(
-                "assets/logo_fundo_transparente.png",
-                height: 125,
-              ),
               Padding(
                 padding: EdgeInsets.only(
-                  bottom: 50,
+                  bottom: 15,
+                ),
+                child: Image.asset(
+                  "assets/logo_fundo_transparente.png",
+                  height: 125,
                 ),
               ),
               Text(
