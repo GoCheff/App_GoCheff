@@ -15,14 +15,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30) ,
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [topColor, bottomColor]),
           ),
-          child: Column(
+          child: SingleChildScrollView(child:Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -46,11 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Form(
                   child: Column(
-                    children: [TextFormField(autofocus: true,)],
-                  )
-              )
+                    children: [
+                      TextFormField(
+                        autofocus: true,
+                        decoration:
+                        InputDecoration(prefixIcon: Icon(Icons.mail_outline)),
+                      )
+                    ],
+                  ))
             ],
-          )),
+          ) ,
+    ),
+      ),
     );
   }
 }
