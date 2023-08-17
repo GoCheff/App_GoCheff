@@ -15,15 +15,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [topColor, bottomColor]),
-          ),
-          child: SingleChildScrollView(child:Column(
+        height: MediaQuery.of(context).size.height,
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [topColor, bottomColor]),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -47,61 +48,62 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Form(
                   child: Column(
-                    children: [
-                      TextFormField(
-                        autofocus: true,
-                        decoration:
-                        InputDecoration(
-                          labelText: "E-mail",
-                            labelStyle:  TextStyle(color: Colors.white),
-                            prefixIcon: Icon(
-                                Icons.mail_outline,
-                              color: Colors.white,
-                            ),
-                          border: UnderlineInputBorder(
-                          borderSide:BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide:BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      labelText: "E-mail",
+                      labelStyle: TextStyle(color: Colors.white),
+                      prefixIcon: Icon(
+                        Icons.mail_outline,
+                        color: Colors.white,
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
                         ),
                       ),
-                      TextFormField(
-                        decoration:
-                        InputDecoration(
-                          labelText: "Senha",
-                          labelStyle:  TextStyle(color: Colors.white),
-                          prefixIcon: Icon(
-                            Icons.vpn_key_off_sharp,
-                            color: Colors.white,
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide:BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  )
-              ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 7)
-              ),
-              Text("Esqueceu a senha?", textAlign: TextAlign.right,)
+                    ),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Senha",
+                      labelStyle: TextStyle(color: Colors.white),
+                      prefixIcon: Icon(
+                        Icons.vpn_key_off_sharp,
+                        color: Colors.white,
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+              Padding(padding: EdgeInsets.only(bottom: 10)),
+              GestureDetector(
+                onTap:(){print("FUNCIONOU!!");} ,
+                child: Text(
+                  "Esqueceu a senha?",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  textAlign: TextAlign.right,
+                ),
+              )
             ],
-          ) ,
-    ),
+          ),
+        ),
       ),
     );
   }
