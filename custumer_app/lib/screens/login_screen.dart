@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -51,10 +51,54 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         autofocus: true,
                         decoration:
-                        InputDecoration(prefixIcon: Icon(Icons.mail_outline)),
-                      )
+                        InputDecoration(
+                          labelText: "E-mail",
+                            labelStyle:  TextStyle(color: Colors.white),
+                            prefixIcon: Icon(
+                                Icons.mail_outline,
+                              color: Colors.white,
+                            ),
+                          border: UnderlineInputBorder(
+                          borderSide:BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide:BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                        ),
+                      ),
+                      TextFormField(
+                        decoration:
+                        InputDecoration(
+                          labelText: "Senha",
+                          labelStyle:  TextStyle(color: Colors.white),
+                          prefixIcon: Icon(
+                            Icons.vpn_key_off_sharp,
+                            color: Colors.white,
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide:BorderSide(
+                              color: Colors.white,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:BorderSide(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
-                  ))
+                  )
+              ),
+              Padding(
+                  padding: EdgeInsets.only(
+                      bottom: 7)
+              ),
+              Text("Esqueceu a senha?", textAlign: TextAlign.right,)
             ],
           ) ,
     ),
