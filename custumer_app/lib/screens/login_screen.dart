@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   Color topColor = Colors.orange;
   Color bottomColor = Colors.white;
+  bool continueConnected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,13 +95,38 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
               Padding(padding: EdgeInsets.only(bottom: 10)),
               GestureDetector(
-                onTap:(){print("FUNCIONOU!!");} ,
+                onTap: () {
+                  print("FUNCIONOU!!");
+                },
                 child: Text(
                   "Esqueceu a senha?",
                   style: TextStyle(color: Colors.white, fontSize: 12),
                   textAlign: TextAlign.right,
                 ),
-              )
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 10)),
+              Row(
+                children: [
+                  Checkbox(
+                    checkColor: Colors.white,
+                    value: this.continueConnected,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        this.continueConnected = newValue!;
+                      });
+                    },
+                  ),
+                  Text(
+                    "Continuar conectado?",
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("Login"),
+              ),
             ],
           ),
         ),
