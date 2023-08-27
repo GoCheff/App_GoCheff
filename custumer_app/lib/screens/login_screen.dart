@@ -1,3 +1,4 @@
+import 'package:custumer_app/values/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:custumer_app/screens/login_screen.dart';
 import 'package:custumer_app/screens/home.dart';
@@ -125,8 +126,40 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text("Login"),
+                child: Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  primary: CustomColors().getActivePrimaryButtonColor(),
+                ),
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Divider(color: Colors.black),
+              ),
+              Text(
+                "Ainda não possui uma conta?",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 13),
+              ),
+              Padding(padding:EdgeInsets.symmetric(vertical: 10),
+                child:          ElevatedButton(
+                  onPressed: (){},
+                  child: Text(
+                      "Cadastre-se"),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+
+                    ),
+                    primary: CustomColors().getActiveSecondaryButtonColor(),
+                  ),
+                ),
+                  ),
             ],
           ),
         ),
