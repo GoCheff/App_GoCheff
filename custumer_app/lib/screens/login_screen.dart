@@ -15,155 +15,56 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [topColor, bottomColor]),
-        ),
-        child: SingleChildScrollView(
+    return MaterialApp(
+     home: Scaffold(
+        backgroundColor: Color(0xfff19b2a),
+        body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 15,
-                ),
-                child: Image.asset(
-                  "assets/logo_fundo_transparente.png",
-                  height: 125,
-                ),
-              ),
-              Text(
-                "Entrar",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Container(
+                height: 200,
+                width: 500,
+                alignment: Alignment.bottomCenter,
+                color: Colors.white.withOpacity(0.9), // Cor do fundo
+                padding: EdgeInsets.symmetric(horizontal: 75.75, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildLoginButton(context),
+                    _buildRegisterButton(context),
+                  ],
                 ),
               ),
-              Form(
-                  child: Column(
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: "E-mail",
-                      labelStyle: TextStyle(color: Colors.white),
-                      prefixIcon: Icon(
-                        Icons.mail_outline,
-                        color: Colors.white,
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Senha",
-                      labelStyle: TextStyle(color: Colors.white),
-                      prefixIcon: Icon(
-                        Icons.vpn_key_off_sharp,
-                        color: Colors.white,
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              Padding(padding: EdgeInsets.only(bottom: 10)),
-              GestureDetector(
-                onTap: () {
-                  print("FUNCIONOU!!");
-                },
-                child: Text(
-                  "Esqueceu a senha?",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                  textAlign: TextAlign.right,
-                ),
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 10)),
-              Row(
-                children: [
-                  Checkbox(
-                    checkColor: Colors.white,
-                    value: this.continueConnected,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        this.continueConnected = newValue!;
-                      });
-                    },
-                  ),
-                  Text(
-                    "Continuar conectado?",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                    textAlign: TextAlign.right,
-                  ),
-                ],
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  primary: CustomColors().getActivePrimaryButtonColor(),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Divider(color: Colors.black),
-              ),
-              Text(
-                "Ainda não possui uma conta?",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13),
-              ),
-              Padding(padding:EdgeInsets.symmetric(vertical: 10),
-                child:          ElevatedButton(
-                  onPressed: (){},
-                  child: Text(
-                      "Cadastre-se"),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-
-                    ),
-                    primary: CustomColors().getActiveSecondaryButtonColor(),
-                  ),
-                ),
-                  ),
             ],
           ),
         ),
       ),
+
+    );
+
+  }
+  Widget _buildLoginButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.orangeAccent,
+      ),
+      onPressed: () {
+        // Lógica para processar o login
+      },
+      child: Text('Login'),
+    );
+  }
+
+  Widget _buildRegisterButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.orangeAccent,
+      ),
+      onPressed: () {
+        // Lógica para redirecionar para a tela de registro
+      },
+      child: Text('Registrar'),
     );
   }
 }
