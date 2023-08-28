@@ -16,20 +16,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     home: Scaffold(
-        backgroundColor: Color(0xfff19b2a),
+      home: Scaffold(
+        backgroundColor: Colors.white.withOpacity(0.9),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Image.asset('assets/chapeu.png',),
               Container(
-                height: 200,
+                height: 320,
                 width: 500,
                 alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.symmetric(horizontal: 75.75),
-                decoration: BoxDecoration( color: Colors.white.withOpacity(0.9), borderRadius: BorderRadius.circular(20)
-                  // Cor do fundo
-                ),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -42,31 +43,33 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-
     );
-
   }
+
   Widget _buildLoginButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.orangeAccent,
+        primary: Colors.white,
       ),
       onPressed: () {
         // Lógica para processar o login
       },
-      child: Text('Login'),
+      child: Text(
+        'Entrar',
+        style: TextStyle(color: Colors.black),
+      ),
     );
   }
 
   Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.orangeAccent,
+        primary: Colors.white,
       ),
       onPressed: () {
         // Lógica para redirecionar para a tela de registro
       },
-      child: Text('Registrar'),
+      child: Text('Cadastrar', style: TextStyle(color: Colors.black)),
     );
   }
 }
