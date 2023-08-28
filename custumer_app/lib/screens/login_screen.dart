@@ -26,8 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 200,
                 width: 500,
                 alignment: Alignment.bottomCenter,
-                color: Colors.white.withOpacity(0.9), // Cor do fundo
-                padding: EdgeInsets.symmetric(horizontal: 75.75, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 75.75),
+                decoration: BoxDecoration( color: Colors.white.withOpacity(0.9), borderRadius: BorderRadius.circular(20)
+                  // Cor do fundo
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
