@@ -23,14 +23,28 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
+                height: 300,
+              width: 500,
+                alignment: Alignment.bottomCenter,
+                decoration: BoxDecoration(
+                  color: Colors.white,
 
-                height: 320,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Image.asset('assets/chapeu.png',width: 200, height: 200,),
+                  ],
+                ),
+              ),
+              Container(
+                height: 50,
                 width: 500,
                 alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.symmetric(horizontal: 75.75),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35), bottomRight:Radius.circular(35), )),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -39,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
+
             ],
           ),
         ),
@@ -49,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLoginButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.white.withOpacity(0.9),
+        primary: Colors.white,
       ),
       onPressed: () {
         // Lógica para processar o login
@@ -64,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.white.withOpacity(0.9),
+        backgroundColor: Colors.white,
+        primary: Colors.white
       ),
       onPressed: () {
         // Lógica para redirecionar para a tela de registro
