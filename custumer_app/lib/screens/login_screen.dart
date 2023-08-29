@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white.withOpacity(0.9),
         body: SingleChildScrollView(
@@ -59,48 +60,48 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 50, horizontal: 50),
-                  child:
-                  Column(
-                    children: [
-                      Form(
-                        child:TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            labelText: "E-mail",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: Colors.black,
-                            ),
-                            border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)),
-                          ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+                child: Column(
+                  children: [
+                    Form(
+                      child: TextFormField(
+                        style: TextStyle(color: Colors.black),
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: "E-mail",
+                          labelStyle: TextStyle(color: Colors.black),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
                         ),
                       ),
-                      Form(
-                        child:TextFormField(
-                          style: TextStyle(color: Colors.black),
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            labelText: "Senha",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon: Icon(
-                              Icons.key_sharp,
-                              color: Colors.black,
-                            ),
-                            border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)),
-                          ),
+                    ),
+                    Form(
+                      child: TextFormField(
+                        style: TextStyle(color: Colors.black),
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: "Senha",
+                          labelStyle: TextStyle(color: Colors.black),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
                         ),
                       ),
-                    ],
-                  ),
-
+                    ),
+                    Padding(padding: EdgeInsets.only(bottom: 10)),
+                    GestureDetector(
+                      child: Text(
+                        "Esqueci minha senha",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
                 ),
-
+              ),
             ],
           ),
         ),
