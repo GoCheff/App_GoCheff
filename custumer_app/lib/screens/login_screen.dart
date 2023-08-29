@@ -53,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -62,25 +61,38 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginButton(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Colors.white,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+      decoration: const BoxDecoration(
+        border:
+          Border(
+            bottom: BorderSide(width: 4,
+              color: Colors.orange
+
+            )
+          ),
       ),
-      onPressed: () {
-        // Lógica para processar o login
-      },
-      child: Text(
-        'Entrar',
-        style: TextStyle(color: Colors.black),
-      ),
+      child:
+      TextButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white
+          ),
+          onPressed: () {
+            // Lógica para processar o login
+          },
+          child: Text(
+            'Entrar',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
     );
+
   }
 
   Widget _buildRegisterButton(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
-        primary: Colors.white
       ),
       onPressed: () {
         // Lógica para redirecionar para a tela de registro
