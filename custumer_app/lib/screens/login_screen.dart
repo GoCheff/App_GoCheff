@@ -59,38 +59,53 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-                child: Column(
-                  children: [
-                    Form(
-                        child:
-                        TextFormField( style: TextStyle(color: Colors.black),
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: "E-mail",
-                        labelStyle: TextStyle(
-                            color: Colors.black),
-                        prefixIcon: Icon(
-                          Icons.email_outlined, color: Colors.black,
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black
-                          )
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+                  child:
+                  Column(
+                    children: [
+                      Form(
+                        child:TextFormField(
+                          style: TextStyle(color: Colors.black),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(color: Colors.black),
+                            prefixIcon: Icon(
+                              Icons.email_outlined,
+                              color: Colors.black,
+                            ),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
+                          ),
                         ),
                       ),
-                    ),
-                    ),
-                  ],
+                      Form(
+                        child:TextFormField(
+                          style: TextStyle(color: Colors.black),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            labelText: "Senha",
+                            labelStyle: TextStyle(color: Colors.black),
+                            prefixIcon: Icon(
+                              Icons.key_sharp,
+                              color: Colors.black,
+                            ),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                 ),
-              )
+
             ],
           ),
         ),
-        ),
-      );
-
+      ),
+    );
   }
 
   Widget _buildLoginButton(BuildContext context) {
