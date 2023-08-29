@@ -22,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.asset('assets/chapeu.png',),
               Container(
+
                 height: 320,
                 width: 500,
                 alignment: Alignment.bottomCenter,
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLoginButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.white,
+        primary: Colors.white.withOpacity(0.9),
       ),
       onPressed: () {
         // Lógica para processar o login
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.white,
+        primary: Colors.white.withOpacity(0.9),
       ),
       onPressed: () {
         // Lógica para redirecionar para a tela de registro
