@@ -1,9 +1,8 @@
-import 'package:custumer_app/values/custom_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:custumer_app/screens/login_screen.dart';
-import 'package:custumer_app/screens/home.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -27,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 300,
                 width: 500,
                 alignment: Alignment.bottomCenter,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
@@ -45,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50,
                 width: 500,
                 alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.symmetric(horizontal: 75.75),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.symmetric(horizontal: 75.75),
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(35),
@@ -61,14 +60,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
                 child: Column(
                   children: [
                     Form(
                       child: TextFormField(
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         autofocus: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "E-mail",
                           labelStyle: TextStyle(color: Colors.black),
                           border: UnderlineInputBorder(
@@ -78,9 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Form(
                       child: TextFormField(
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         autofocus: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Senha",
                           labelStyle: TextStyle(color: Colors.black),
                           border: UnderlineInputBorder(
@@ -88,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(bottom: 10)),
+                    const Padding(padding: EdgeInsets.only(bottom: 10)),
                     GestureDetector(
-                      child: Text(
+                      child: const Text(
                         "Esqueci minha senha",
                         style: TextStyle(
                           color: Colors.black,
@@ -118,9 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextButton(
         style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         onPressed: () {
-          // Lógica para processar o login
+          // TODO: Lógica para processar o login
         },
-        child: Text(
+        child: const Text(
           'Entrar',
           style: TextStyle(color: Colors.black),
         ),
@@ -134,9 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
       ),
       onPressed: () {
-        // Lógica para redirecionar para a tela de registro
+        // TODO: Lógica para redirecionar para a tela de registro
       },
-      child: Text('Cadastrar', style: TextStyle(color: Colors.black)),
+      child: const Text('Cadastrar', style: TextStyle(color: Colors.black)),
     );
   }
 }
