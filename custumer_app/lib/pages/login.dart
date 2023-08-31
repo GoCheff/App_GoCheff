@@ -1,7 +1,7 @@
 import 'package:customer_app/templates/non_auth.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
-import 'package:customer_app/ui/components/text_input.dart';
-import 'package:customer_app/ui/router/router.dart';
+import 'package:customer_app/ui/layouts/text_input.dart';
+import 'package:customer_app/router/router.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
