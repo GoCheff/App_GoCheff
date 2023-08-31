@@ -1,4 +1,6 @@
-import 'package:custumer_app/screens/login_screen.dart';
+import 'package:customer_app/pages/login.dart';
+import 'package:customer_app/ui/data/custom_colors.dart';
+import 'package:customer_app/ui/router/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,9 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Go Cheffe',
-      home: LoginScreen(),
+    RouterContext router = RouterContext(context);
+
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: CustomColors.palette,
+      ),
+      title: 'Go Cheff',
+      routes: router.getRoutes(),
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
