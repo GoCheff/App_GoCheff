@@ -9,6 +9,8 @@ class CustomColors {
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
 
+  static const Color background = Color(0xfff2f2f2);
+
   static MaterialColor palette = MaterialColor(
     const Color.fromRGBO(212, 133, 6, 1.0).value,
     const <int, Color>{

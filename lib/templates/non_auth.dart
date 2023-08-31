@@ -15,7 +15,7 @@ class _NonAuthTemplateState extends State<NonAuthTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColors.white.withOpacity(0.93),
+      backgroundColor: CustomColors.background,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -70,12 +70,10 @@ class _NonAuthTemplateState extends State<NonAuthTemplate> {
       ),
       child: TextButton(
         style: ElevatedButton.styleFrom(backgroundColor: CustomColors.white),
-        onPressed: () {
-        },
-        child: const Text(
-          'Entrar',
-          style: TextStyle(color: CustomColors.black),
-        ),
+        onPressed: () {},
+        child: const Text('Entrar',
+            style: TextStyle(
+                color: CustomColors.black, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -89,7 +87,7 @@ class _NonAuthTemplateState extends State<NonAuthTemplate> {
         // TODO: Lógica para redirecionar para a tela de registro
       },
       child:
-          const Text('Cadastrar', style: TextStyle(color: CustomColors.black)),
+          const Text('Cadastrar', style: TextStyle(  color: CustomColors.black, fontWeight: FontWeight.bold)),
     );
   }
 }

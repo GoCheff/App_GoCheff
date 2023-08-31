@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       color: CustomColors.secondary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: 14,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25),
                   )),
                   padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 20)),
+                      const EdgeInsets.symmetric(vertical: 19)),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   }
                 },
-                child: const Text('Entrar'),
+                child: const Text('Entrar', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
               ),
             ),
           ]),

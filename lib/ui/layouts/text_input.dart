@@ -62,7 +62,7 @@ class TextInput extends StatelessWidget {
         labelText: labelText,
         labelStyle: const TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.bold,
         ),
       ),
       validator: (value) => validator(name, value, additionalValidators),
