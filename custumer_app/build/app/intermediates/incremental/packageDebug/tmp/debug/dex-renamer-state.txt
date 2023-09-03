@@ -1,0 +1,4 @@
+#Sun Aug 27 14:04:29 BRT 2023
+base.0=C\:\\_src\\customer-front\\custumer_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
