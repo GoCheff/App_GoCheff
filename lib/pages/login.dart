@@ -1,3 +1,5 @@
+import 'package:customer_app/data/types.dart';
+import 'package:customer_app/services/customer.dart';
 import 'package:customer_app/templates/non_auth.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 import 'package:customer_app/ui/layouts/text_input.dart';
@@ -16,6 +18,15 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  void _login() async {
+    Response response = await CustomerService().login(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    print(response.message);
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -26,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     RouterContext router = RouterContext(context);
+    _login();
 
     return NonAuthTemplate(
       form: Column(
@@ -89,7 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   }
                 },
-                child: const Text('Entrar', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                child: const Text('Entrar',
+                    style:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
               ),
             ),
           ]),

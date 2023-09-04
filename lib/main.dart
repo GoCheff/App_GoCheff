@@ -2,10 +2,13 @@ import 'package:customer_app/router/router.dart';
 import 'package:customer_app/ui/components/no_internet_screen.dart';
 import 'package:customer_app/ui/components/splash_screen.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+
   runApp(const MyApp());
 }
 

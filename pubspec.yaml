@@ -39,6 +39,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_no_internet_widget: ^1.0.0+18-dev.1
   flutter_launcher_icons: ^0.11.0
+  http: ^1.1.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/
+   - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
