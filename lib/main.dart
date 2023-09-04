@@ -20,8 +20,6 @@ class MyApp extends StatelessWidget {
         offline: const FullScreenWidget(
           child: NoInternetScreen(),
         ),
-        whenOffline: () => print('No Internet'),
-        whenOnline: () => print('Connected to internet'),
         online: MaterialApp(
           theme: ThemeData(
               primarySwatch: CustomColors.palette, fontFamily: 'Jost'),
