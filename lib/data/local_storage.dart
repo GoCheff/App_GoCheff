@@ -10,3 +10,8 @@ Future<String?> localStorageRead(String key) async {
 
   return prefs.getString(key);
 }
+
+Future<void> localStorageRemove(String key) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.remove(key);
+}

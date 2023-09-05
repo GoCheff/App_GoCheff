@@ -9,20 +9,20 @@ import 'package:customer_app/ui/layouts/text_input.dart';
 import 'package:customer_app/router/router.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<SignupPage> {
   bool isLoading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void login(context) async {
+  /*void login(context) async {
     setState(() {
       isLoading = true;
     });
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       RouterContext router = RouterContext(context);
       router.goTo('Home');
     }
-  }
+  }*/
 
   @override
   void dispose() {
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     RouterContext router = RouterContext(context);
 
     return NonAuthTemplate(
-      currentPage: 'Login',
+      currentPage: 'Signup',
       form: Column(
         children: [
           Form(
@@ -92,27 +92,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const Padding(padding: EdgeInsets.only(bottom: 10)),
-          Row(
-            children: [
-              GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30),
-                  child: const Text(
-                    "Esqueci minha senha",
-                    style: TextStyle(
-                      color: CustomColors.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                onTap: () {
-                  router.goTo('Forgot password');
-                },
-              ),
-            ],
-          ),
           Row(children: [
             Expanded(
               child: FilledButton(
@@ -128,11 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      login(context);
+                      /*login(context);*/
+                      // TODO: register
                     }
                   },
                   child: !isLoading
-                      ? const Text('Entrar',
+                      ? const Text('Cadastrar',
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.bold))
                       : LoadingSpinner(

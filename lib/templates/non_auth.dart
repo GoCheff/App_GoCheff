@@ -1,11 +1,13 @@
+import 'package:customer_app/router/router.dart';
 import 'package:customer_app/ui/components/icon.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class NonAuthTemplate extends StatefulWidget {
   final Widget form;
+  final String? currentPage;
 
-  const NonAuthTemplate({super.key, required this.form});
+  const NonAuthTemplate({super.key, required this.form, required this.currentPage});
 
   @override
   _NonAuthTemplateState createState() => _NonAuthTemplateState();
@@ -62,15 +64,28 @@ class _NonAuthTemplateState extends State<NonAuthTemplate> {
   }
 
   Widget _buildLoginButton(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
-      decoration: const BoxDecoration(
+    RouterContext router = RouterContext(context);
+    bool isLoginPage = widget.currentPage == 'Login';
+
+    BoxDecoration? loginBorder;
+
+    if (isLoginPage) {
+      loginBorder = const BoxDecoration(
         border:
             Border(bottom: BorderSide(width: 4, color: CustomColors.secondary)),
-      ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+      decoration: loginBorder,
       child: TextButton(
         style: ElevatedButton.styleFrom(backgroundColor: CustomColors.white),
-        onPressed: () {},
+        onPressed: () {
+          if (isLoginPage) return;
+
+          router.goTo('Login');
+        },
         child: const Text('Entrar',
             style: TextStyle(
                 color: CustomColors.black, fontWeight: FontWeight.bold)),
@@ -79,15 +94,32 @@ class _NonAuthTemplateState extends State<NonAuthTemplate> {
   }
 
   Widget _buildRegisterButton(BuildContext context) {
-    return TextButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: CustomColors.white,
+    RouterContext router = RouterContext(context);
+    bool isSignupPage = widget.currentPage == 'Signup';
+
+    BoxDecoration? signupBorder;
+
+    if (isSignupPage) {
+      signupBorder = const BoxDecoration(
+        border:
+        Border(bottom: BorderSide(width: 4, color: CustomColors.secondary)),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
+      decoration: signupBorder,
+      child: TextButton(
+        style: ElevatedButton.styleFrom(backgroundColor: CustomColors.white),
+        onPressed: () {
+          if (isSignupPage) return;
+
+          router.goTo('Sign up');
+        },
+        child: const Text('Cadastrar',
+            style: TextStyle(
+                color: CustomColors.black, fontWeight: FontWeight.bold)),
       ),
-      onPressed: () {
-        // TODO: Lógica para redirecionar para a tela de registro
-      },
-      child:
-          const Text('Cadastrar', style: TextStyle(  color: CustomColors.black, fontWeight: FontWeight.bold)),
     );
   }
 }
