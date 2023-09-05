@@ -1,5 +1,9 @@
 import 'package:customer_app/assets/icons/logo_icon.dart';
+import 'package:customer_app/data/local_storage.dart';
+import 'package:customer_app/data/types.dart';
 import 'package:customer_app/router/router.dart';
+import 'package:customer_app/services/customer.dart';
+import 'package:customer_app/states/user.dart';
 import 'package:customer_app/ui/components/loading_spinner.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +20,49 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    RouterContext router = RouterContext(context);
-
-    // TODO: get user from local storage
-
-    Future.delayed(const Duration(seconds: 3), () {
-      router.goTo('Login');
+    Future.delayed(const Duration(seconds: 2), () {
+      auth(context);
     });
+  }
+
+  void auth(context) async {
+    String? token = await localStorageRead('token');
+
+    if (token != null) {
+      Response response = await CustomerService().auth(
+        token: token,
+      );
+
+      if (!response.error) {
+        dynamic user = (response as CustomerAuthResponse).user;
+        user['token'] = token;
+
+        UserProvider userProvider = readUserProvider(context);
+
+        UserState newUserState = UserState.fromJson(user);
+        userProvider.setUser(newUserState);
+
+        RouterContext router = RouterContext(context);
+        router.goTo('Home');
+        return;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.message),
+            backgroundColor: CustomColors.error,
+          ),
+        );
+      }
+    }
+
+    RouterContext router = RouterContext(context);
+    router.goTo('Login');
   }
 
   @override
   Widget build(BuildContext context) {
+    RouterContext router = RouterContext(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -45,16 +81,16 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 270,
                   height: 270,
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    LogoIcon(
+                    const LogoIcon(
                       fill: CustomColors.secondary,
                       width: 175,
                       height: 175,
                     ),
                     LoadingSpinner(),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                   ],
                 ),
               ],
