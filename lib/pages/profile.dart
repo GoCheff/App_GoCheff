@@ -1,3 +1,5 @@
+import 'package:customer_app/data/local_storage.dart';
+import 'package:customer_app/router/router.dart';
 import 'package:customer_app/states/user.dart';
 import 'package:customer_app/templates/auth.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
@@ -6,26 +8,29 @@ import 'package:flutter/material.dart';
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    RouterContext router = RouterContext(context);
+
     return AuthTemplate(
       currentRoute: 'Profile',
       title: "Perfil",
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(33.0),
+          padding:
+              const EdgeInsets.only(top: 33, left: 33, right: 33, bottom: 60),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 padding: const EdgeInsets.all(16.0),
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
-                  color: Colors.white, // Cor de fundo do contêiner
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF393939).withOpacity(0.03), // Cor e opacidade do boxShadow
-                      offset: Offset(0, 30), // Deslocamento horizontal (0) e vertical (30)
-                      blurRadius: 60, // Raio de desfoque
-                      spreadRadius: 0, // Espalhamento
+                      color: const Color(0xFF393939).withOpacity(0.03),
+                      offset: const Offset(0, 30),
+                      blurRadius: 60,
+                      spreadRadius: 0,
                     ),
                   ],
                   borderRadius: BorderRadius.circular(16),
@@ -42,7 +47,11 @@ class ProfilePage extends StatelessWidget {
                         color: CustomColors.secondary,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      // child: Image.asset('caminho_para_sua_imagem.jpg'),
+                      child: const Icon(
+                        Icons.person,
+                        size: 64.0,
+                        color: Colors.white,
+                      ),
                     ),
                     SizedBox(
                       height: 60,
@@ -52,7 +61,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Text(
                             watchUserState(context)?.name ?? "",
-                            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             watchUserState(context)?.email ?? "",
@@ -66,61 +76,71 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white, // Cor de fundo do contêiner
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xFF393939).withOpacity(0.03), // Cor e opacidade do boxShadow
-                      offset: Offset(0, 30), // Deslocamento horizontal (0) e vertical (30)
-                      blurRadius: 60, // Raio de desfoque
-                      spreadRadius: 0, // Espalhamento
+              FilledButton(
+                  onPressed: () {
+                    router.goTo('Orders');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(CustomColors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                  ],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Pedidos",
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(
+                        top: 18, bottom: 18, left: 16, right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Pedidos",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: CustomColors.black),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: CustomColors.black,
+                          size: 20.0,
+                        ),
+                      ],
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: CustomColors.black,
-                      size: 20.0,
-                    ),
-                  ],
-                ),
+                  )),
+              const Expanded(
+                flex: 1,
+                child: SizedBox(),
               ),
+              const SizedBox(height: 10),
+              Row(children: [
+                Expanded(
+                  child: FilledButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(CustomColors.primary),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        )),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(vertical: 19)),
+                      ),
+                      onPressed: () async {
+                        UserProvider userProvider = readUserProvider(context);
+                        userProvider.removeUser();
+                        localStorageRemove("token");
 
-              // Espaçamento entre o conteúdo e os botões
-              SizedBox(height: 20),
-
-              // Botões "Atualizar" e "Sair" ocupando a largura total
-              ElevatedButton(
-                onPressed: () {
-                  // Lógica para a ação "Atualizar"
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: CustomColors.secondary, // Cor de fundo do botão
-                  minimumSize: Size(double.infinity, 48), // Largura total e altura do botão
+                        router.goTo('Login');
+                      },
+                      child: const Text('Sair',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold))),
                 ),
-                child: Text("Atualizar"),
-              ),
-              SizedBox(height: 10), // Espaçamento entre os botões
-              ElevatedButton(
-                onPressed: () {
-                  // Lógica para a ação "Sair"
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Cor de fundo do botão
-                  minimumSize: Size(double.infinity, 48), // Largura total e altura do botão
-                ),
-                child: Text("Sair"),
-              ),
+              ]),
             ],
           ),
         ),
