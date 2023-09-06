@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 
 class AuthTemplate extends StatelessWidget {
   final Widget child;
-  final bool showTitle;
+  final String? title;
   final String currentRoute;
 
   const AuthTemplate({
     super.key,
     required this.child,
-    this.showTitle = false,
+    this.title,
     this.currentRoute = "",
   });
 
@@ -21,48 +21,53 @@ class AuthTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     RouterContext router = RouterContext(context);
 
+    final bool showBackButton = title != null;
+
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: AppBar(
-        title: showTitle
-            ? Text(currentRoute.substring(1).toUpperCase())
-            : const Text(''),
+        title: Center(
+            child: Text(title ?? "",
+                style: const TextStyle(
+                    color: CustomColors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18))),
         forceMaterialTransparency: true,
-        leading: Builder(
-            builder: (context) => IconButton(
+        leading: showBackButton
+            ? IconButton(
+                splashRadius: 20,
+                icon: const Icon(Icons.arrow_back_ios, color: CustomColors.black, size: 20),
+                onPressed: () {
+                  router.pop();
+                },
+              )
+            : Builder(
+                builder: (context) => IconButton(
                   splashRadius: 20,
                   icon: const MenuIcon(
                       fill: CustomColors.gray, height: 20, width: 20),
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                )),
+                ),
+              ),
         iconTheme: const IconThemeData(color: CustomColors.gray),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            splashRadius: 20,
-            onPressed: () {
-              print('cart');
-            },
-          ),
+          if (title == null)
+            IconButton(
+              icon: const Icon(Icons.shopping_cart_outlined),
+              splashRadius: 20,
+              onPressed: () {
+                print('cart');
+              },
+            )
+          else
+            const SizedBox(width: 48),
         ],
       ),
       drawer: _buildMenuAside(context),
       body: Stack(
         children: [
-          if (showTitle)
-            const Positioned(
-              top: 16.0,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  'Título',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ),
-            ),
           Align(
             alignment: Alignment.bottomCenter,
             child: BottomAppBar(
@@ -99,13 +104,13 @@ class AuthTemplate extends StatelessWidget {
                     IconButton(
                       splashRadius: 20,
                       icon: Icon(Icons.history,
-                          color: currentRoute == 'History'
+                          color: currentRoute == 'Orders'
                               ? CustomColors.secondary
                               : CustomColors.gray),
                       onPressed: () {
-                        if (currentRoute == 'History') return;
+                        if (currentRoute == 'Orders') return;
 
-                        router.goTo('History');
+                        router.goTo('Orders');
                       },
                     ),
                   ],
@@ -113,9 +118,7 @@ class AuthTemplate extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: showTitle ? 64.0 : 0),
-            // Leva em consideração o espaço do título
+          Container(
             child: child,
           ),
         ],
@@ -133,18 +136,18 @@ class AuthTemplate extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
             ),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(
+                const Icon(
                   Icons.person,
                   size: 64.0,
                   color: Colors.white,
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
-                  'Nome do usuário',
-                  style: TextStyle(
+                  watchUserState(context)?.name ?? "",
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
                   ),
@@ -162,21 +165,30 @@ class AuthTemplate extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.history),
-            title: const Text('Pedidos'),
-            onTap: () {
-              if (currentRoute == 'History') return;
-
-              router.goTo('History');
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
               if (currentRoute == 'Profile') return;
 
               router.goTo('Profile');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_cart_outlined),
+            title: const Text('Carrinho'),
+            onTap: () {
+              if (currentRoute == 'Cart') return;
+
+              router.goTo('Cart');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.history),
+            title: const Text('Pedidos'),
+            onTap: () {
+              if (currentRoute == 'Orders') return;
+
+              router.goTo('Orders');
             },
           ),
           ListTile(

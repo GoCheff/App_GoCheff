@@ -1,5 +1,7 @@
 import 'package:customer_app/pages/home.dart';
 import 'package:customer_app/pages/login.dart';
+import 'package:customer_app/pages/orders.dart';
+import 'package:customer_app/pages/profile.dart';
 import 'package:customer_app/pages/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,16 @@ class RouterContext {
       'path': '/home',
       'name': 'Home',
       'page': HomePage(),
+    },
+    {
+      'path': '/profile',
+      'name': 'Profile',
+      'page': ProfilePage(),
+    },
+    {
+      'path': '/orders',
+      'name': 'Orders',
+      'page': OrdersPage(),
     },
     {
       'path': '/forgot-password',
@@ -50,5 +62,9 @@ class RouterContext {
         routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
 
     Navigator.pushNamed(context, route['path'] as String);
+  }
+
+  void pop() {
+    Navigator.pop(context);
   }
 }
