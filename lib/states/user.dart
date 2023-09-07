@@ -1,4 +1,5 @@
 import 'package:customer_app/data/types.dart';
+import 'package:customer_app/states/cheffs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +10,12 @@ class UserState {
   final String email;
   final Gender gender;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final DateTime? deletedAt;
+
   final String token;
+
+  List<CheffState>? cheffs;
 
   UserState({
     required this.id,
@@ -22,6 +26,7 @@ class UserState {
     required this.updatedAt,
     required this.deletedAt,
     required this.token,
+    this.cheffs,
   });
 
   factory UserState.fromJson(Map<String, dynamic> json) {
@@ -31,12 +36,14 @@ class UserState {
       email: json['email'],
       gender: parseGender(json['gender']),
       createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      deletedAt: json['deletedAt'] == Null ? DateTime.parse(json['deletedAt']) : null,
+      updatedAt:
+          json['updatedAt'] == Null ? DateTime.parse(json['updatedAt']) : null,
+      deletedAt:
+          json['deletedAt'] == Null ? DateTime.parse(json['deletedAt']) : null,
       token: json['token'],
+      cheffs: null,
     );
   }
-
 }
 
 class UserProvider with ChangeNotifier {
@@ -46,6 +53,13 @@ class UserProvider with ChangeNotifier {
 
   void setUser(UserState user) {
     _user = user;
+    notifyListeners();
+  }
+
+  void setCheffs(List<CheffState> cheffs) {
+    if (_user == null) return;
+
+    _user!.cheffs = cheffs;
     notifyListeners();
   }
 

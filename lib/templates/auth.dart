@@ -159,6 +159,7 @@ class AuthTemplate extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
+              Navigator.pop(context);
               if (currentRoute == 'Home') return;
 
               router.goTo('Home');
@@ -168,6 +169,7 @@ class AuthTemplate extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
+              Navigator.pop(context);
               if (currentRoute == 'Profile') return;
 
               router.goTo('Profile');
@@ -177,6 +179,7 @@ class AuthTemplate extends StatelessWidget {
             leading: const Icon(Icons.shopping_cart_outlined),
             title: const Text('Carrinho'),
             onTap: () {
+              Navigator.pop(context);
               if (currentRoute == 'Cart') return;
 
               router.goTo('Cart');
@@ -186,6 +189,7 @@ class AuthTemplate extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: const Text('Pedidos'),
             onTap: () {
+              Navigator.pop(context);
               if (currentRoute == 'Orders') return;
 
               router.goTo('Orders');
@@ -195,6 +199,7 @@ class AuthTemplate extends StatelessWidget {
             leading: const Icon(Icons.payment_outlined),
             title: const Text('Métodos de pagamento'),
             onTap: () {
+              Navigator.pop(context);
             },
           ),
           ListTile(
