@@ -22,7 +22,6 @@ class ProfilePage extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(16.0),
-                margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -76,40 +75,16 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              FilledButton(
-                  onPressed: () {
+              const SizedBox(height: 20),
+              BoxOption(
+                  router: router, title: "Métodos de pagamento", action: () {}),
+              const SizedBox(height: 13),
+              BoxOption(
+                  router: router,
+                  title: "Pedidos",
+                  action:  () {
                     router.goTo('Orders');
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(CustomColors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
-                        top: 18, bottom: 18, left: 16, right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Pedidos",
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: CustomColors.black),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: CustomColors.black,
-                          size: 20.0,
-                        ),
-                      ],
-                    ),
-                  )),
+                  }),
               const Expanded(
                 flex: 1,
                 child: SizedBox(),
@@ -146,5 +121,55 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BoxOption extends StatelessWidget {
+  final RouterContext router;
+  final String title;
+  final Function action;
+
+  const BoxOption({
+    super.key,
+    required this.router,
+    required this.title,
+    required this.action,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+        onPressed: () {
+          action();
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(CustomColors.white),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 18, bottom: 18, left: 16, right: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColors.black),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: CustomColors.black,
+                size: 20.0,
+              ),
+            ],
+          ),
+        ));
   }
 }

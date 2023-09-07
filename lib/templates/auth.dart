@@ -192,6 +192,12 @@ class AuthTemplate extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.payment_outlined),
+            title: const Text('Métodos de pagamento'),
+            onTap: () {
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Sair'),
             onTap: () {
