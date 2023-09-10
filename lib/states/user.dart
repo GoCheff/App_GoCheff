@@ -63,6 +63,13 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setCheffFoodPlate(int cheffId, List<FoodPlate> foodPlates) {
+    if (_user == null) return;
+
+    _user!.cheffs!.firstWhere((element) => element.id == cheffId).foodPlates = foodPlates;
+    notifyListeners();
+  }
+
   void removeUser() {
     _user = null;
     notifyListeners();

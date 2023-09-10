@@ -23,6 +23,21 @@ class CheffService {
 
     return CheffGetAllResponse.fromJson(jsonDecode(response.body));
   }
+
+  Future<Response> get({required String token, required int cheffId}) async {
+    var url = Uri.parse('$baseUrl/$cheffId');
+    var headers = makeBaseRequestHeaders(token: token);
+
+    final response = await http.get(url, headers: headers);
+
+    bool error = response.statusCode != 200;
+
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CheffGetResponse.fromJson(jsonDecode(response.body));
+  }
 }
 
 class CheffGetAllResponse extends Response {
@@ -36,5 +51,19 @@ class CheffGetAllResponse extends Response {
   CheffGetAllResponse.fromJson(Map<String, dynamic> json, {bool error = false})
       : super(data: json, error: error, message: json['message']) {
     cheffs = json['data'];
+  }
+}
+
+class CheffGetResponse extends Response {
+  late final dynamic cheff;
+
+  CheffGetResponse({required data, bool error = false, required message})
+      : super(data: data, error: false, message: message) {
+    cheff = data;
+  }
+
+  CheffGetResponse.fromJson(Map<String, dynamic> json, {bool error = false})
+      : super(data: json, error: error, message: json['message']) {
+    cheff = json['data'];
   }
 }

@@ -1,3 +1,4 @@
+import 'package:customer_app/pages/cheff.dart';
 import 'package:customer_app/pages/home.dart';
 import 'package:customer_app/pages/login.dart';
 import 'package:customer_app/pages/orders.dart';
@@ -12,7 +13,7 @@ class RouterContext {
     {
       'path': '/home',
       'name': 'Home',
-      'page': HomePage(),
+      'page': const HomePage(),
     },
     {
       'path': '/profile',
@@ -22,7 +23,12 @@ class RouterContext {
     {
       'path': '/orders',
       'name': 'Orders',
-      'page': OrdersPage(),
+      'page': const OrdersPage(),
+    },
+    {
+      'path': '/cheff',
+      'name': 'Cheff',
+      'page': const CheffPage(),
     },
     {
       'path': '/forgot-password',
@@ -57,11 +63,11 @@ class RouterContext {
     return routesToReturn;
   }
 
-  void goTo(String name) {
+  void goTo(String name, {Object? arguments}) {
     var route =
         routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
 
-    Navigator.pushNamed(context, route['path'] as String);
+    Navigator.pushNamed(context, route['path'] as String, arguments: arguments);
   }
 
   void pop() {

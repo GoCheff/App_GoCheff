@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:customer_app/data/local_storage.dart';
 import 'package:customer_app/data/types.dart';
+import 'package:customer_app/router/router.dart';
 import 'package:customer_app/services/cheff.dart';
 import 'package:customer_app/states/cheffs.dart';
 import 'package:customer_app/states/user.dart';
@@ -9,65 +10,9 @@ import 'package:customer_app/ui/data/custom_colors.dart';
 import 'package:customer_app/utils/ellipsis_text.dart';
 import 'package:flutter/material.dart';
 
-class ChefCard extends StatelessWidget {
-  final CheffState cheff;
-
-  ChefCard(this.cheff);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
-      margin: const EdgeInsets.all(10),
-      color: CustomColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      child: Container(
-        constraints: const BoxConstraints(minWidth: 1000),
-        padding: const EdgeInsets.all(22),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: CustomColors.secondary,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              child: const Icon(
-                Icons.person,
-                size: 64.0,
-                color: CustomColors.white,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              ellipsisName(cheff.name),
-              style: const TextStyle(
-                fontSize: 18,
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              cheff.mainCuisine,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: CustomColors.secondary),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -77,9 +22,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      getCheffs(context);
-    });
+    getCheffs(context);
   }
 
   void getCheffs(context) async {
@@ -99,6 +42,8 @@ class _HomePageState extends State<HomePage> {
       List<CheffState> cheffsState = [];
 
       for (var cheff in cheffs) {
+        if (cheff['registerStatus'] != 'approved') continue;
+
         cheffsState.add(CheffState.fromJson(cheff));
       }
 
@@ -131,14 +76,82 @@ class _HomePageState extends State<HomePage> {
                       .toList()
                   : [],
               options: CarouselOptions(
-                height: 270,
-                viewportFraction: 0.45,
+                height: 300,
+                viewportFraction: 0.50,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.15,
                 enableInfiniteScroll: false,
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ChefCard extends StatelessWidget {
+  final CheffState cheff;
+
+  const ChefCard(this.cheff, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    RouterContext router = RouterContext(context);
+
+    return GestureDetector(
+      onTap: () {
+        router.goTo('Cheff', arguments: {
+          'cheffId': cheff.id,
+          'cheffName': cheff.name,
+        });
+      },
+      child: Card(
+        elevation: 1,
+        margin: const EdgeInsets.all(10),
+        color: CustomColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Container(
+          constraints: const BoxConstraints(minWidth: 1000),
+          padding: const EdgeInsets.all(22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: CustomColors.secondary,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: const Icon(
+                  Icons.person,
+                  size: 64.0,
+                  color: CustomColors.white,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                ellipsisName(cheff.name),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                cheff.mainCuisine,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: CustomColors.secondary),
+              ),
+            ],
+          ),
         ),
       ),
     );

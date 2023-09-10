@@ -6,12 +6,17 @@ String ellipsisText(String text) {
   }
 }
 
-String ellipsisName(String name) {
+String ellipsisName(String name, {int length = 20}) {
   if (name.length > 20) {
     var names = name.split(" ");
     var ellipsis = "${names[0]} ";
 
     for (var i = 1; i < names.length - 1; i++) {
+      if (["de", "da", "do", "dos", "das", "e"].contains(names[i])) {
+        ellipsis += "${names[i]} ";
+        continue;
+      }
+
       ellipsis += "${names[i][0]}. ";
     }
 
