@@ -9,9 +9,31 @@ import 'package:http/http.dart' as http;
 class CheffService {
   var baseUrl = '${Env.API_URL}/customers/cheffs';
 
-  Future<Response> getAll({required String token}) async {
-    var url = Uri.parse('$baseUrl/');
+  Future<Response> getAll(
+      {required String token,
+      String? mainCuisine,
+      String? city,
+      bool? glutenFree,
+      bool? lactoseFree,
+      bool? vegan,
+      bool? vegetarian,
+      bool? light}) async {
+    String query = '';
+    List<String> filters = [];
+
+    if (mainCuisine != null) filters.add('mainCuisine=$mainCuisine');
+    if (city != null) filters.add('city=$city');
+    if (glutenFree == true) filters.add('glutenFree=$glutenFree');
+    if (lactoseFree == true) filters.add('lactoseFree=$lactoseFree');
+    if (vegan == true) filters.add('vegan=$vegan');
+    if (vegetarian == true) filters.add('vegetarian=$vegetarian');
+    if (light == true) filters.add('light=$light');
+    if (filters.isNotEmpty) query = '?${filters.join('&')}';
+
+    var url = Uri.parse('$baseUrl$query');
     var headers = makeBaseRequestHeaders(token: token);
+
+    print('GET $url');
 
     final response = await http.get(url, headers: headers);
 

@@ -77,9 +77,6 @@ class ProfilePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               BoxOption(
-                  router: router, title: "Métodos de pagamento", action: () {}),
-              const SizedBox(height: 13),
-              BoxOption(
                   router: router,
                   title: "Pedidos",
                   action:  () {

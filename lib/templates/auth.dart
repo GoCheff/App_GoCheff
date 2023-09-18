@@ -36,7 +36,8 @@ class AuthTemplate extends StatelessWidget {
         leading: showBackButton
             ? IconButton(
                 splashRadius: 20,
-                icon: const Icon(Icons.arrow_back_ios, color: CustomColors.black, size: 20),
+                icon: const Icon(Icons.arrow_back_ios,
+                    color: CustomColors.black, size: 20),
                 onPressed: () {
                   router.pop();
                 },
@@ -70,53 +71,55 @@ class AuthTemplate extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: BottomAppBar(
-              color: CustomColors.background,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      splashRadius: 20,
-                      icon: Icon(Icons.home,
-                          color: currentRoute == 'Home'
-                              ? CustomColors.secondary
-                              : CustomColors.gray),
-                      onPressed: () {
-                        if (currentRoute == 'Home') return;
+            child: currentRoute != 'Home'
+                ? BottomAppBar(
+                    color: CustomColors.background,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            splashRadius: 20,
+                            icon: Icon(Icons.home,
+                                color: currentRoute == 'Home'
+                                    ? CustomColors.secondary
+                                    : CustomColors.gray),
+                            onPressed: () {
+                              if (currentRoute == 'Home') return;
 
-                        router.goTo('Home');
-                      },
-                    ),
-                    IconButton(
-                      splashRadius: 20,
-                      icon: Icon(Icons.person,
-                          color: currentRoute == 'Profile'
-                              ? CustomColors.secondary
-                              : CustomColors.gray),
-                      onPressed: () {
-                        if (currentRoute == 'Profile') return;
+                              router.goTo('Home');
+                            },
+                          ),
+                          IconButton(
+                            splashRadius: 20,
+                            icon: Icon(Icons.person,
+                                color: currentRoute == 'Profile'
+                                    ? CustomColors.secondary
+                                    : CustomColors.gray),
+                            onPressed: () {
+                              if (currentRoute == 'Profile') return;
 
-                        router.goTo('Profile');
-                      },
-                    ),
-                    IconButton(
-                      splashRadius: 20,
-                      icon: Icon(Icons.history,
-                          color: currentRoute == 'Orders'
-                              ? CustomColors.secondary
-                              : CustomColors.gray),
-                      onPressed: () {
-                        if (currentRoute == 'Orders') return;
+                              router.goTo('Profile');
+                            },
+                          ),
+                          IconButton(
+                            splashRadius: 20,
+                            icon: Icon(Icons.history,
+                                color: currentRoute == 'Orders'
+                                    ? CustomColors.secondary
+                                    : CustomColors.gray),
+                            onPressed: () {
+                              if (currentRoute == 'Orders') return;
 
-                        router.goTo('Orders');
-                      },
+                              router.goTo('Orders');
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : null,
           ),
           Container(
             child: child,
@@ -193,13 +196,6 @@ class AuthTemplate extends StatelessWidget {
               if (currentRoute == 'Orders') return;
 
               router.goTo('Orders');
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.payment_outlined),
-            title: const Text('Métodos de pagamento'),
-            onTap: () {
-              Navigator.pop(context);
             },
           ),
           ListTile(
