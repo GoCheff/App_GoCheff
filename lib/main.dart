@@ -1,12 +1,18 @@
 import 'package:customer_app/router/router.dart';
+import 'package:customer_app/states/user.dart';
 import 'package:customer_app/ui/components/no_internet_screen.dart';
 import 'package:customer_app/ui/components/splash_screen.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  await dotenv.load();
+
+  runApp(ChangeNotifierProvider(
+      create: (BuildContext context) => UserProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,8 +26,6 @@ class MyApp extends StatelessWidget {
         offline: const FullScreenWidget(
           child: NoInternetScreen(),
         ),
-        whenOffline: () => print('No Internet'),
-        whenOnline: () => print('Connected to internet'),
         online: MaterialApp(
           theme: ThemeData(
               primarySwatch: CustomColors.palette, fontFamily: 'Jost'),

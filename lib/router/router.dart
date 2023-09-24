@@ -1,4 +1,9 @@
+import 'package:customer_app/pages/cheff.dart';
+import 'package:customer_app/pages/home.dart';
 import 'package:customer_app/pages/login.dart';
+import 'package:customer_app/pages/orders.dart';
+import 'package:customer_app/pages/profile.dart';
+import 'package:customer_app/pages/signup.dart';
 import 'package:flutter/material.dart';
 
 class RouterContext {
@@ -8,14 +13,22 @@ class RouterContext {
     {
       'path': '/home',
       'name': 'Home',
-      'page': Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-        ),
-        body: const Center(
-          child: Text('Home'),
-        )
-      ),
+      'page': const HomePage(),
+    },
+    {
+      'path': '/profile',
+      'name': 'Profile',
+      'page': ProfilePage(),
+    },
+    {
+      'path': '/orders',
+      'name': 'Orders',
+      'page': const OrdersPage(),
+    },
+    {
+      'path': '/cheff',
+      'name': 'Cheff',
+      'page': const CheffPage(),
     },
     {
       'path': '/forgot-password',
@@ -32,14 +45,7 @@ class RouterContext {
     {
       'path': '/sign-up',
       'name': 'Sign up',
-      'page': Scaffold(
-        appBar: AppBar(
-          title: const Text('Sign up'),
-        ),
-        body: const Center(
-          child: Text('Sign up'),
-        ),
-      ),
+      'page': const SignupPage(),
     },
     {'path': '/login', 'name': 'Login', 'page': const LoginPage()}
   ];
@@ -57,13 +63,14 @@ class RouterContext {
     return routesToReturn;
   }
 
-  void goTo(String name) {
+  void goTo(String name, {Object? arguments}) {
     var route =
         routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
 
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => route['page'] as Widget),
-        (route) => false);
+    Navigator.pushNamed(context, route['path'] as String, arguments: arguments);
+  }
+
+  void pop() {
+    Navigator.pop(context);
   }
 }
