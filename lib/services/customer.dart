@@ -40,6 +40,40 @@ class CustomerService {
 
     return CustomerAuthResponse.fromJson(jsonDecode(response.body));
   }
+
+  Future<Response> getOrders({required String token}) async {
+    var url = Uri.parse('$baseUrl/carts');
+    var headers = makeBaseRequestHeaders(token: token);
+
+    print(url);
+
+    final response = await http.get(url, headers: headers);
+
+    bool error = response.statusCode != 200;
+
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CustomerGetOrdersResponse.fromJson(jsonDecode(response.body));
+  }
+
+  Future<Response> createPayment({required String token, required int cartId}) async {
+    var url = Uri.parse('$baseUrl/carts/$cartId/payment');
+    var headers = makeBaseRequestHeaders(token: token);
+
+    print(url);
+
+    final response = await http.post(url, headers: headers);
+
+    bool error = response.statusCode != 201;
+
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CustomerCreatePaymentResponse.fromJson(jsonDecode(response.body));
+  }
 }
 
 class CustomerLoginResponse extends Response {
@@ -75,5 +109,37 @@ class CustomerAuthResponse extends Response {
       {bool error = false})
       : super(data: json, error: error, message: json['message']) {
     user = json['data'];
+  }
+}
+
+class CustomerGetOrdersResponse extends Response {
+  late final List<dynamic> carts;
+
+  CustomerGetOrdersResponse(
+      {required data, bool error = false, required message})
+      : super(data: data, error: false, message: message) {
+    carts = data;
+  }
+
+  CustomerGetOrdersResponse.fromJson(Map<String, dynamic> json,
+      {bool error = false})
+      : super(data: json, error: error, message: json['message']) {
+    carts = json['data'];
+  }
+}
+
+class CustomerCreatePaymentResponse extends Response {
+  late final String paymentLink;
+
+  CustomerCreatePaymentResponse(
+      {required data, bool error = false, required message})
+      : super(data: data, error: false, message: message) {
+    paymentLink = data['paymentLink'];
+  }
+
+  CustomerCreatePaymentResponse.fromJson(Map<String, dynamic> json,
+      {bool error = false})
+      : super(data: json, error: error, message: json['message']) {
+    paymentLink = json['data']['paymentLink'];
   }
 }

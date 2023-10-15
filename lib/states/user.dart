@@ -1,4 +1,5 @@
 import 'package:customer_app/data/types.dart';
+import 'package:customer_app/states/carts.dart';
 import 'package:customer_app/states/cheffs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class UserState {
   final String token;
 
   List<CheffState>? cheffs;
+
+  List<CartState>? carts;
 
   List<String>? possibleMainCuisines;
 
@@ -37,6 +40,7 @@ class UserState {
       required this.deletedAt,
       required this.token,
       this.cheffs,
+      this.carts,
       this.possibleMainCuisines,
       this.mainCuisine,
       this.city,
@@ -94,6 +98,13 @@ class UserProvider with ChangeNotifier {
 
     _user!.cheffs!.firstWhere((element) => element.id == cheffId).foodPlates =
         foodPlates;
+    notifyListeners();
+  }
+
+  void setCarts(List<CartState> carts) {
+    if (_user == null) return;
+
+    _user!.carts = carts;
     notifyListeners();
   }
 
