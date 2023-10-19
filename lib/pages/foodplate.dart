@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
+import '../utils/ellipsis_text.dart';
+import 'package:customer_app/services/cheff.dart';
+import 'package:customer_app/pages/cheff.dart';
 
 class FoodPlatePage extends StatelessWidget {
+  const FoodPlatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,11 +16,12 @@ class FoodPlatePage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 10.0),
                   Container(
                     padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                     alignment: Alignment.topLeft,
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back, size: 32.0, color: Colors.black),
+                      icon: Icon(Icons.arrow_back_ios, size: 22.0, color: Colors.black),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -35,13 +41,13 @@ class FoodPlatePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 60.0),
+                  SizedBox(height: 50.0),
                   Text(
-                    'Lorem ipsum',
+                    "Lorem Ipsum",
                     style: TextStyle(
                       fontSize: 26.0,
                       fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w200,
                     ),
                   ),
                   SizedBox(height: 10.0),
@@ -64,9 +70,9 @@ class FoodPlatePage extends StatelessWidget {
                         Text(
                           'Descrição ',
                           style: TextStyle(
-                            color: CustomColors.gray,
+                            color: CustomColors.black,
                             fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w200,
                             fontSize: 18.0,
                           ),
                         ),
@@ -89,9 +95,9 @@ class FoodPlatePage extends StatelessWidget {
                         Text(
                           'Ingredientes',
                           style: TextStyle(
-                            color: CustomColors.gray,
+                            color: CustomColors.black,
                             fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w200,
                             fontSize: 18.0,
                           ),
                         ),
@@ -115,9 +121,9 @@ class FoodPlatePage extends StatelessWidget {
             width: 300,
             height: 70,
             child: ElevatedButton(
-              onPressed: () {
-                // Ação do botão
-              },
+    onPressed: () {
+    Navigator.of(context).pop();
+    },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -131,7 +137,10 @@ class FoodPlatePage extends StatelessWidget {
               ),
               child: Text(
                 'Adicionar ao carrinho',
-                style: TextStyle(fontSize: 18.0, color: Colors.white),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                    color: Colors.white),
               ),
             ),
           ),
