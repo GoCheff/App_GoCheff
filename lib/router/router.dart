@@ -4,6 +4,7 @@ import 'package:customer_app/pages/login.dart';
 import 'package:customer_app/pages/orders.dart';
 import 'package:customer_app/pages/profile.dart';
 import 'package:customer_app/pages/signup.dart';
+import 'package:customer_app/pages/foodplate.dart';
 import 'package:flutter/material.dart';
 
 class RouterContext {
@@ -30,6 +31,12 @@ class RouterContext {
       'name': 'Cheff',
       'page': const CheffPage(),
     },
+    {
+      'path': '/foodplate',
+      'name': 'Food Plate',
+      'page': const FoodPlatePage(),
+    },
+
     {
       'path': '/forgot-password',
       'name': 'Forgot password',
