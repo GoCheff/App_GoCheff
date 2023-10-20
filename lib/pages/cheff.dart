@@ -158,7 +158,7 @@ class FoodPlateCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        router.goTo('Food Plate', arguments: foodPlate.id);
+        router.goTo('Order Details', arguments: foodPlate.id);
       },
       child: Card(
         elevation: 1,

@@ -5,6 +5,7 @@ import 'package:customer_app/pages/orders.dart';
 import 'package:customer_app/pages/profile.dart';
 import 'package:customer_app/pages/signup.dart';
 import 'package:customer_app/pages/foodplate.dart';
+import 'package:customer_app/pages/orderDetails.dart';
 import 'package:flutter/material.dart';
 
 class RouterContext {
@@ -35,6 +36,11 @@ class RouterContext {
       'path': '/foodplate',
       'name': 'Food Plate',
       'page': const FoodPlatePage(),
+    },
+    {
+      'path': '/orderdetails',
+      'name': 'Order Details',
+      'page': const OrderDetailsPage(),
     },
 
     {

@@ -1,9 +1,13 @@
+import 'package:customer_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+void main() => runApp(OrderDetailsPage());
+
+class OrderDetailsPage extends StatelessWidget {
+  const OrderDetailsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    RouterContext router = RouterContext(context);
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -44,7 +49,9 @@ class Header extends StatelessWidget {
               Icons.arrow_back,
               size: 25,
             ),
-            onPressed: () {},
+            onPressed: () {
+              router.goTo('Home');
+            },
           ),
           Expanded(
             child: Center(
@@ -164,10 +171,14 @@ class MyValueRow extends StatelessWidget {
 class OrderButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    RouterContext router = RouterContext(context);
+
     return Padding(
       padding: EdgeInsets.all(20.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          router.goTo('Home');
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: CustomColors.secondary,
           padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 20.0),
