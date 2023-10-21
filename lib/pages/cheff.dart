@@ -44,10 +44,7 @@ class _CheffPageState extends State<CheffPage> {
 
     if (getUserState(context)!.cheffs!.isEmpty) return;
 
-    CheffState? cheff = getUserState(context)!
-        .cheffs
-        ?.where((element) => element.id == cheffId)
-        .first;
+    CheffState? cheff = getUserState(context)!.cheffs?.where((element) => element.id == cheffId).first;
 
     if (cheff == null) return;
 
@@ -89,8 +86,7 @@ class _CheffPageState extends State<CheffPage> {
     UserState? user = watchUserState(context);
 
     final args = ModalRoute.of(context)!.settings.arguments;
-    CheffPageArguments cheffPageArguments =
-        CheffPageArguments.fromJson(args as Map<String, dynamic>);
+    CheffPageArguments cheffPageArguments = CheffPageArguments.fromJson(args as Map<String, dynamic>);
     cheffId = cheffPageArguments.cheffId;
 
     if (!platesLoaded) {
@@ -107,11 +103,7 @@ class _CheffPageState extends State<CheffPage> {
               items: user != null &&
                       user.cheffs != null &&
                       user.cheffs!.isNotEmpty &&
-                      user.cheffs!
-                              .where((element) => element.id == cheffId)
-                              .first
-                              .foodPlates !=
-                          null
+                      user.cheffs!.where((element) => element.id == cheffId).first.foodPlates != null
                   ? user.cheffs!
                       .where((element) => element.id == cheffId)
                       .first
@@ -158,7 +150,7 @@ class FoodPlateCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        router.goTo('Order Details', arguments: foodPlate.id);
+        router.goTo('foodplate', arguments: foodPlate.id);
       },
       child: Card(
         elevation: 1,
@@ -196,8 +188,7 @@ class FoodPlateCard extends StatelessWidget {
                         }
 
                         return Image.network(snapshot.data!, fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
+                            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                           return const Icon(
                             Icons.fastfood,
                             size: 64.0,
@@ -223,10 +214,7 @@ class FoodPlateCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 toReal(foodPlate.price),
-                style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColors.secondary),
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: CustomColors.secondary),
               ),
               Text(
                 properties,

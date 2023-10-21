@@ -5,6 +5,7 @@ import 'package:customer_app/pages/orders.dart';
 import 'package:customer_app/pages/profile.dart';
 import 'package:customer_app/pages/signup.dart';
 import 'package:customer_app/pages/foodplate.dart';
+import 'package:customer_app/pages/cart.dart';
 import 'package:customer_app/pages/orderDetails.dart';
 import 'package:flutter/material.dart';
 
@@ -38,11 +39,15 @@ class RouterContext {
       'page': const FoodPlatePage(),
     },
     {
+      'path': '/cart',
+      'name': 'Cart',
+      'page': const CartPage(),
+    },
+    {
       'path': '/orderdetails',
       'name': 'Order Details',
       'page': const OrderDetailsPage(),
     },
-
     {
       'path': '/forgot-password',
       'name': 'Forgot password',
@@ -69,16 +74,14 @@ class RouterContext {
     Map<String, Widget Function(BuildContext)> routesToReturn = {};
 
     for (var route in routes) {
-      routesToReturn[route['path'] as String] =
-          (BuildContext context) => route['page'] as Widget;
+      routesToReturn[route['path'] as String] = (BuildContext context) => route['page'] as Widget;
     }
 
     return routesToReturn;
   }
 
   void goTo(String name, {Object? arguments}) {
-    var route =
-        routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
+    var route = routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
 
     Navigator.pushNamed(context, route['path'] as String, arguments: arguments);
   }
