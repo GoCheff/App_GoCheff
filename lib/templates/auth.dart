@@ -26,18 +26,12 @@ class AuthTemplate extends StatelessWidget {
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: AppBar(
-        title: Center(
-            child: Text(title ?? "",
-                style: const TextStyle(
-                    color: CustomColors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18))),
+        title: Center(child: Text(title ?? "", style: const TextStyle(color: CustomColors.black, fontWeight: FontWeight.bold, fontSize: 18))),
         forceMaterialTransparency: true,
         leading: showBackButton
             ? IconButton(
                 splashRadius: 20,
-                icon: const Icon(Icons.arrow_back_ios,
-                    color: CustomColors.black, size: 20),
+                icon: const Icon(Icons.arrow_back_ios, color: CustomColors.black, size: 20),
                 onPressed: () {
                   router.pop();
                 },
@@ -45,8 +39,7 @@ class AuthTemplate extends StatelessWidget {
             : Builder(
                 builder: (context) => IconButton(
                   splashRadius: 20,
-                  icon: const MenuIcon(
-                      fill: CustomColors.gray, height: 20, width: 20),
+                  icon: const MenuIcon(fill: CustomColors.gray, height: 20, width: 20),
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
@@ -59,7 +52,7 @@ class AuthTemplate extends StatelessWidget {
               icon: const Icon(Icons.shopping_cart_outlined),
               splashRadius: 20,
               onPressed: () {
-                print('cart');
+                router.goTo("Cart");
               },
             )
           else
@@ -81,10 +74,7 @@ class AuthTemplate extends StatelessWidget {
                         children: [
                           IconButton(
                             splashRadius: 20,
-                            icon: Icon(Icons.home,
-                                color: currentRoute == 'Home'
-                                    ? CustomColors.secondary
-                                    : CustomColors.gray),
+                            icon: Icon(Icons.home, color: currentRoute == 'Home' ? CustomColors.secondary : CustomColors.gray),
                             onPressed: () {
                               if (currentRoute == 'Home') return;
 
@@ -93,10 +83,7 @@ class AuthTemplate extends StatelessWidget {
                           ),
                           IconButton(
                             splashRadius: 20,
-                            icon: Icon(Icons.person,
-                                color: currentRoute == 'Profile'
-                                    ? CustomColors.secondary
-                                    : CustomColors.gray),
+                            icon: Icon(Icons.person, color: currentRoute == 'Profile' ? CustomColors.secondary : CustomColors.gray),
                             onPressed: () {
                               if (currentRoute == 'Profile') return;
 
@@ -105,10 +92,7 @@ class AuthTemplate extends StatelessWidget {
                           ),
                           IconButton(
                             splashRadius: 20,
-                            icon: Icon(Icons.history,
-                                color: currentRoute == 'Orders'
-                                    ? CustomColors.secondary
-                                    : CustomColors.gray),
+                            icon: Icon(Icons.history, color: currentRoute == 'Orders' ? CustomColors.secondary : CustomColors.gray),
                             onPressed: () {
                               if (currentRoute == 'Orders') return;
 
