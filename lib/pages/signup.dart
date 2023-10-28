@@ -18,16 +18,18 @@ class SignupPage extends StatefulWidget {
 
 class _LoginPageState extends State<SignupPage> {
   bool isLoading = false;
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  /*void login(context) async {
+  void signup(context) async {
     setState(() {
       isLoading = true;
     });
 
-    Response response = await CustomerService().login(
+    Response response = await CustomerService().signup(
+      name: _nameController.text,
       email: _emailController.text,
       password: _passwordController.text,
     );
@@ -44,23 +46,14 @@ class _LoginPageState extends State<SignupPage> {
         ),
       );
     } else {
-      UserProvider userProvider = readUserProvider(context);
-
-      String token = (response as CustomerLoginResponse).token;
-      dynamic user = (response as CustomerLoginResponse).user;
-      user['token'] = token;
-
-      UserState newUserState = UserState.fromJson(user);
-      userProvider.setUser(newUserState);
-      await localStorageSave("token", token);
-
       RouterContext router = RouterContext(context);
-      router.goTo('Home');
+      router.goTo('Login');
     }
-  }*/
+  }
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -78,6 +71,11 @@ class _LoginPageState extends State<SignupPage> {
             key: _formKey,
             child: Column(
               children: [
+                TextInput(
+                    name: 'name',
+                    labelText: 'Nome',
+                    controller: _nameController),
+                Container(padding: const EdgeInsets.all(10)),
                 TextInput(
                     name: 'email',
                     labelText: 'Email',
@@ -107,8 +105,7 @@ class _LoginPageState extends State<SignupPage> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      /*login(context);*/
-                      // TODO: register
+                      signup(context);
                     }
                   },
                   child: !isLoading

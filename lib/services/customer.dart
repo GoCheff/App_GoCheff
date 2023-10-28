@@ -26,6 +26,23 @@ class CustomerService {
     return CustomerLoginResponse.fromJson(jsonDecode(response.body));
   }
 
+  Future<Response> signup(
+      {required String name, required String email, required String password}) async {
+    var url = Uri.parse('$baseUrl/sign-up');
+    var headers = makeBaseRequestHeaders();
+    var body = jsonEncode({'name': name, 'email': email, 'password': password, 'gender': 'preferNotToSay'});
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    bool error = response.statusCode != 201;
+
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CustomerSignupResponse.fromJson(jsonDecode(response.body));
+  }
+
   Future<Response> auth({required String token}) async {
     var url = Uri.parse('$baseUrl/auth');
     var headers = makeBaseRequestHeaders(token: token);
@@ -93,6 +110,21 @@ class CustomerLoginResponse extends Response {
       : super(data: json, error: error, message: json['message']) {
     token = json['data']['token'];
     user = json['data']['user'];
+    message = json['message'];
+  }
+}
+
+class CustomerSignupResponse extends Response {
+  late final String message;
+
+  CustomerSignupResponse(
+      {required data, bool error = false, required this.message})
+      : super(data: data, error: false, message: message) {
+  }
+
+  CustomerSignupResponse.fromJson(Map<String, dynamic> json,
+      {bool error = false})
+      : super(data: json, error: error, message: json['message']) {
     message = json['message'];
   }
 }
