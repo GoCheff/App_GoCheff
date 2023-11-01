@@ -8,11 +8,13 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/* 
+customers/carts/:id/patch 
+*/
 Future<void> main() async {
   await dotenv.load();
 
-  runApp(ChangeNotifierProvider(
-      create: (BuildContext context) => UserProvider(), child: const MyApp()));
+  runApp(ChangeNotifierProvider(create: (BuildContext context) => UserProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,8 +29,7 @@ class MyApp extends StatelessWidget {
           child: NoInternetScreen(),
         ),
         online: MaterialApp(
-          theme: ThemeData(
-              primarySwatch: CustomColors.palette, fontFamily: 'Jost'),
+          theme: ThemeData(primarySwatch: CustomColors.palette, fontFamily: 'Jost'),
           title: 'Go Cheff',
           routes: router.getRoutes(),
           home: const SplashScreen(),
