@@ -57,12 +57,8 @@ class UserState {
         email: json['email'],
         gender: parseGender(json['gender']),
         createdAt: DateTime.parse(json['createdAt']),
-        updatedAt: json['updatedAt'] == Null
-            ? DateTime.parse(json['updatedAt'])
-            : null,
-        deletedAt: json['deletedAt'] == Null
-            ? DateTime.parse(json['deletedAt'])
-            : null,
+        updatedAt: json['updatedAt'] == Null ? DateTime.parse(json['updatedAt']) : null,
+        deletedAt: json['deletedAt'] == Null ? DateTime.parse(json['deletedAt']) : null,
         token: json['token'],
         cheffs: null,
         possibleMainCuisines: null,
@@ -96,8 +92,7 @@ class UserProvider with ChangeNotifier {
   void setCheffFoodPlate(int cheffId, List<FoodPlate> foodPlates) {
     if (_user == null) return;
 
-    _user!.cheffs!.firstWhere((element) => element.id == cheffId).foodPlates =
-        foodPlates;
+    _user!.cheffs!.firstWhere((element) => element.id == cheffId).foodPlates = foodPlates;
     notifyListeners();
   }
 

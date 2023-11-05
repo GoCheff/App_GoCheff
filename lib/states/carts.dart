@@ -1,8 +1,4 @@
-import 'package:customer_app/data/types.dart';
 import 'package:customer_app/states/cheffs.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CartState {
   final int id;
@@ -18,18 +14,18 @@ class CartState {
 
   List<CartItem>? cartItems;
 
-  CartState({
-    required this.id,
-    required this.customerId,
-    required this.status,
-    required this.locale,
-    required this.eventDate,
-    required this.phoneContact,
-    required this.observation,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
-  });
+  CartState(
+      {required this.id,
+      required this.customerId,
+      required this.status,
+      required this.locale,
+      required this.eventDate,
+      required this.phoneContact,
+      required this.observation,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt,
+      this.cartItems});
 
   factory CartState.fromJson(Map<String, dynamic> json) {
     return CartState(
@@ -64,8 +60,8 @@ class CartItem {
     required this.foodPlateId,
     required this.quantity,
     required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    this.updatedAt,
+    this.deletedAt,
     this.foodPlate,
   });
 

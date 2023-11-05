@@ -82,7 +82,6 @@ class RouterContext {
 
   void goTo(String name, {Object? arguments}) {
     var route = routes.firstWhere((r) => r['name'] == name, orElse: () => routes[0]);
-
     Navigator.pushNamed(context, route['path'] as String, arguments: arguments);
   }
 

@@ -1,21 +1,34 @@
-import 'dart:ffi';
-
+import 'package:customer_app/pages/foodplate.dart';
+import 'package:customer_app/states/carts.dart';
+import 'package:customer_app/states/user.dart';
 import 'package:customer_app/templates/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 import '../utils/ellipsis_text.dart';
-import 'package:customer_app/services/cheff.dart';
-import 'package:customer_app/pages/cheff.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
+
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
+  List<FoodPlateArguments> items = [];
+
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = readUserProvider(context);
+    CartState? cartState = userProvider.user?.carts?.last;
+    List<CartItem>? cartItens = cartState?.cartItems;
+
+    List<Widget> itemCarrinhoWidgets = [];
+    if (cartItens != null) {
+      for (CartItem cartItem in cartItens) {
+        itemCarrinhoWidgets.add(ItemCarrinho(cartItem.foodPlate?.name ?? "", cartItem.foodPlate?.price.toDouble() ?? 00,
+            cartItem.foodPlate?.id.toInt() ?? 0, cartItem.foodPlate?.imageUrl ?? ""));
+      }
+    }
     return AuthTemplate(
       currentRoute: 'Cart',
       title: ellipsisName("Carrinho"),
@@ -36,7 +49,7 @@ class _CartPageState extends State<CartPage> {
           const SizedBox(height: 10),
           Expanded(
               child: ListView(
-            children: [ItemCarrinho("Maicon", 52.25, 1), ItemCarrinho("Pedro", 53.78, 2)],
+            children: itemCarrinhoWidgets,
           )),
           Container(
             margin: const EdgeInsets.only(bottom: 55.0),
@@ -73,7 +86,8 @@ class ItemCarrinho extends StatefulWidget {
   final String nomePrato;
   final double precoPrato;
   final int idPrato;
-  const ItemCarrinho(this.nomePrato, this.precoPrato, this.idPrato, {Key? key}) : super(key: key);
+  final String imageUrl;
+  const ItemCarrinho(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, {Key? key}) : super(key: key);
 
   @override
   State<ItemCarrinho> createState() => _ItemCarrinho();
@@ -84,13 +98,31 @@ class _ItemCarrinho extends State<ItemCarrinho> {
   double valorTotal = 0;
   @override
   Widget build(BuildContext context) {
+    void removeItemCart(int id) {
+      UserProvider userProvider = readUserProvider(context);
+      List<CartState>? cartStateList = userProvider.user?.carts;
+
+      if (cartStateList != null && cartStateList.isNotEmpty) {
+        CartState lastCartState = cartStateList.last;
+
+        int indexToRemove = lastCartState.cartItems!.indexWhere((item) => item.id == id);
+
+        if (indexToRemove != -1) {
+          lastCartState.cartItems!.removeAt(indexToRemove);
+          userProvider.setCarts(cartStateList);
+        }
+      }
+    }
+
     return Dismissible(
       key: Key(widget.idPrato.toString()),
       background: Container(
-        color: CustomColors.gray,
+        color: CustomColors.white,
       ),
       onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {}
+        if (direction == DismissDirection.endToStart) {
+          removeItemCart(widget.idPrato.toInt());
+        }
       },
       child: Center(
         child: Container(
@@ -108,11 +140,10 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.0),
                 ),
-                child: const Center(
+                child: Center(
                   child: CircleAvatar(
                     radius: 45,
-                    backgroundImage:
-                        NetworkImage("https://www.sabornamesa.com.br/media/k2/items/cache/b5b56b2ae93d3dc958cf0c21c9383b18_XL.jpg"), //URL AQUI BURRO
+                    backgroundImage: NetworkImage(widget.imageUrl),
                   ),
                 ),
               ),
@@ -130,7 +161,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                     SizedBox(
                         width: 100,
                         child: Text(
-                          "${valorTotal}",
+                          "$valorTotal",
                           style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
                         ))
                   ]),

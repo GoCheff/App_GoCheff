@@ -63,7 +63,12 @@ class _HomePageState extends State<HomePage> {
 
         cheffsState.add(CheffState.fromJson(cheff));
 
-        if (user.mainCuisine != null || user.glutenFree == true || user.lactoseFree == true || user.vegan == true || user.vegetarian == true || user.light == true) continue;
+        if (user.mainCuisine != null ||
+            user.glutenFree == true ||
+            user.lactoseFree == true ||
+            user.vegan == true ||
+            user.vegetarian == true ||
+            user.light == true) continue;
 
         if (possibleMainCuisines.contains(cheff['mainCuisine'])) continue;
 
@@ -72,7 +77,12 @@ class _HomePageState extends State<HomePage> {
 
       userProvider.setCheffs(cheffsState);
 
-      if (user.mainCuisine == null && user.glutenFree != true && user.lactoseFree != true && user.vegan != true && user.vegetarian != true && user.light != true) {
+      if (user.mainCuisine == null &&
+          user.glutenFree != true &&
+          user.lactoseFree != true &&
+          user.vegan != true &&
+          user.vegetarian != true &&
+          user.light != true) {
         userProvider.setPossibleMainCuisines(possibleMainCuisines);
       }
     } else {
@@ -94,20 +104,15 @@ class _HomePageState extends State<HomePage> {
     UserState user = userProvider.user!;
 
     if (filter == "glutenFree") {
-      userProvider.setGlutenFree(
-          user.glutenFree == null || user.glutenFree == false ? true : false);
+      userProvider.setGlutenFree(user.glutenFree == null || user.glutenFree == false ? true : false);
     } else if (filter == "lactoseFree") {
-      userProvider.setLactoseFree(
-          user.lactoseFree == null || user.lactoseFree == false ? true : false);
+      userProvider.setLactoseFree(user.lactoseFree == null || user.lactoseFree == false ? true : false);
     } else if (filter == "vegan") {
-      userProvider
-          .setVegan(user.vegan == null || user.vegan == false ? true : false);
+      userProvider.setVegan(user.vegan == null || user.vegan == false ? true : false);
     } else if (filter == "vegetarian") {
-      userProvider.setVegetarian(
-          user.vegetarian == null || user.vegetarian == false ? true : false);
+      userProvider.setVegetarian(user.vegetarian == null || user.vegetarian == false ? true : false);
     } else if (filter == "light") {
-      userProvider
-          .setLight(user.light == null || user.light == false ? true : false);
+      userProvider.setLight(user.light == null || user.light == false ? true : false);
     }
 
     getCheffs(context, force: true);
@@ -131,7 +136,6 @@ class _HomePageState extends State<HomePage> {
 
     return "";
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -286,10 +290,7 @@ class ChefCard extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 cheff.mainCuisine,
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColors.secondary),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: CustomColors.secondary),
               ),
             ],
           ),
@@ -338,9 +339,7 @@ class _CuisineFilterItemState extends State<CuisineFilterItem> {
           child: Text(
             widget.cuisine,
             style: TextStyle(
-              color: widget.isSelected
-                  ? CustomColors.secondary
-                  : CustomColors.gray,
+              color: widget.isSelected ? CustomColors.secondary : CustomColors.gray,
               fontSize: 17,
             ),
           ),
