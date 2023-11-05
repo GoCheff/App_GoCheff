@@ -61,8 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    RouterContext router = RouterContext(context);
-
     return Scaffold(
       body: Stack(
         children: [

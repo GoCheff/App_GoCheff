@@ -72,9 +72,7 @@ class _OrdersPageState extends State<OrdersPage> {
             ? Column(
                 children: [
                   CarouselSlider(
-                    items: user.carts!
-                        .map((cart) => CartCard(cart: cart))
-                        .toList(),
+                    items: user.carts!.map((cart) => CartCard(cart: cart)).toList(),
                     options: CarouselOptions(
                       height: 150,
                       viewportFraction: 1,
@@ -88,8 +86,7 @@ class _OrdersPageState extends State<OrdersPage> {
                 ],
               )
             : Padding(
-                padding: const EdgeInsets.only(
-                    top: 33, left: 33, right: 33, bottom: 60),
+                padding: const EdgeInsets.only(top: 33, left: 33, right: 33, bottom: 60),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -125,23 +122,16 @@ class _OrdersPageState extends State<OrdersPage> {
                       Expanded(
                         child: FilledButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  CustomColors.secondary),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
+                              backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               )),
-                              padding: MaterialStateProperty.all(
-                                  const EdgeInsets.symmetric(vertical: 19)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 19)),
                             ),
                             onPressed: () async {
                               router.goTo('Home');
                             },
-                            child: const Text('Fazer um pedido',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold))),
+                            child: const Text('Fazer um pedido', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
                       ),
                     ])
                   ],
@@ -185,8 +175,6 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RouterContext router = RouterContext(context);
-
     return GestureDetector(
         onTap: () {
           if (cart.status == "approved") {
@@ -207,20 +195,17 @@ class CartCard extends StatelessWidget {
                   children: [
                     Text(
                       'Status: ${translateCartStatus(cart.status)}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Text(
                       "Local: ${cart.locale}",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     Text(
                       "Data de criação: ${DateFormat('dd/MM/yyyy').format(cart.createdAt)}",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     )
                   ],
                 ))));

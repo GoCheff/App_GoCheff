@@ -69,7 +69,6 @@ class _CheffPageState extends State<CheffPage> {
       for (var foodPlate in cheff['foodPlates']) {
         foodPlatesCheffState.add(FoodPlate.fromJson(foodPlate));
       }
-
       userProvider.setCheffFoodPlate(cheffId, foodPlatesCheffState);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -109,7 +108,7 @@ class _CheffPageState extends State<CheffPage> {
                       .first
                       .foodPlates!
                       .map(
-                        (foodPlate) => FoodPlateCard(foodPlate),
+                        (foodPlate) => FoodPlateCard(foodPlate, cheffId),
                       )
                       .toList()
                   : [],
@@ -131,8 +130,9 @@ class _CheffPageState extends State<CheffPage> {
 
 class FoodPlateCard extends StatelessWidget {
   final FoodPlate foodPlate;
+  final int cheffId;
 
-  const FoodPlateCard(this.foodPlate, {super.key});
+  const FoodPlateCard(this.foodPlate, this.cheffId, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +150,7 @@ class FoodPlateCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        router.goTo('Food Plate', arguments: foodPlate.id);
+        router.goTo('Food Plate', arguments: {"cheffId": cheffId, "foodPlate": foodPlate});
       },
       child: Card(
         elevation: 1,

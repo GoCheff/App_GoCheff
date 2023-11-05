@@ -8,8 +8,8 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/* 
-customers/carts/:id/patch 
+/*
+vinigugelmin@gmail.com
 */
 Future<void> main() async {
   await dotenv.load();

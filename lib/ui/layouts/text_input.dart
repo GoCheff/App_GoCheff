@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TextInput extends StatelessWidget {
   TextEditingController? controller;
   final String name;
@@ -18,8 +19,7 @@ class TextInput extends StatelessWidget {
     this.additionalValidators,
   }) : super(key: key);
 
-  String? validator(String field, String? value,
-      [List<Function>? additionalValidators]) {
+  String? validator(String field, String? value, [List<Function>? additionalValidators]) {
     if (value == null || value.isEmpty) {
       return 'Este campo não pode ser vazio';
     }

@@ -1,7 +1,4 @@
 import 'package:customer_app/data/types.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CheffState {
   final int id;

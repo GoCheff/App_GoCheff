@@ -2,6 +2,7 @@ import 'package:customer_app/ui/data/custom_colors.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class LoadingSpinner extends StatelessWidget {
   late double size;
 
