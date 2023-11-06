@@ -58,6 +58,23 @@ class CustomerService {
     return CustomerAuthResponse.fromJson(jsonDecode(response.body));
   }
 
+  Future<Response> updateOrCreateCartItem({required String token, required int foodPlateId, required int quantity, required int cheffId, required String locale}) async {
+    var url = Uri.parse('$baseUrl/cart-items/$foodPlateId');
+    var headers = makeBaseRequestHeaders(token: token);
+
+    print(url);
+
+    bool error = response.statusCode != 200;
+
+    final response = await http.put(url, headers: headers, body: jsonEncode({'quantity': quantity, 'cheffId': cheffId, 'locale': locale, 'eventDate': '2023-11-27', 'phoneContact': '', 'observation': ''}));
+
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CustomerUpdateOrCreateCartItemResponse.fromJson(jsonDecode(response.body));
+  }
+
   Future<Response> getOrders({required String token}) async {
     var url = Uri.parse('$baseUrl/carts');
     var headers = makeBaseRequestHeaders(token: token);
@@ -141,6 +158,22 @@ class CustomerAuthResponse extends Response {
       {bool error = false})
       : super(data: json, error: error, message: json['message']) {
     user = json['data'];
+  }
+}
+
+class CustomerUpdateOrCreateCartItemResponse extends Response {
+  late final dynamic cartItem;
+
+  CustomerUpdateOrCreateCartItemResponse(
+      {required data, bool error = false, required message})
+      : super(data: data, error: false, message: message) {
+    cartItem = data;
+  }
+
+  CustomerUpdateOrCreateCartItemResponse.fromJson(Map<String, dynamic> json,
+      {bool error = false})
+      : super(data: json, error: error, message: json['message']) {
+    cartItem = json['data'];
   }
 }
 

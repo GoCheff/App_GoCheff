@@ -14,7 +14,7 @@ class FoodPlatePage extends StatefulWidget {
 }
 
 class _FoodPlatePage extends State<FoodPlatePage> {
-  cartCreate(context) {
+  /*cartCreate(context) {
     List<CartState>? cartState = [];
     UserProvider userProvider = readUserProvider(context);
     cartState = userProvider.user?.carts;
@@ -35,11 +35,20 @@ class _FoodPlatePage extends State<FoodPlatePage> {
 
     cartState.add(cart);
     userProvider.setCarts(cartState);
-  }
+  }*/
 
   addItemCart(CartItem cartItem) {
     UserProvider userProvider = readUserProvider(context);
-    List<CartState>? cartStateList = userProvider.user?.carts;
+    //List<CartState>? cartStateList = userProvider.user?.carts;
+
+    // TODO: arrumar aqui
+    Response response = await CustomerService().updateOrCreateCartItem(
+      token: userProvider.user?.token ?? "",
+      foodPlateId: cartItem.foodPlateId,
+      quantity: cartItem.quantity,
+      cheffId: cartItem.cheffId,
+      locale: cartItem.locale,
+    );
 
     if (cartStateList != null && cartStateList.isNotEmpty) {
       CartState lastCartState = cartStateList.last;
@@ -200,13 +209,13 @@ class _FoodPlatePage extends State<FoodPlatePage> {
             height: 70,
             child: ElevatedButton(
               onPressed: () {
-                if (cartState == null && cartState?.last.status != "Aberta") {
+                /*if (cartState == null && cartState?.last.status != "Aberta") {
                   cartCreate(context);
-                }
+                }*/
 
                 CartItem cartItem = CartItem(
                     id: foodPlateArguments.foodPlate.id,
-                    cartId: cartState?.last.id ?? 1,
+                    cartId: cartState?.last.id ?? 0,
                     foodPlateId: foodPlateArguments.foodPlate.id,
                     quantity: 1,
                     createdAt: DateTime.now(),
@@ -214,7 +223,7 @@ class _FoodPlatePage extends State<FoodPlatePage> {
 
                 addItemCart(cartItem);
 
-                Navigator.of(context).pop();
+                /*Navigator.of(context).pop();*/
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
