@@ -46,6 +46,8 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       UserProvider userProvider = readUserProvider(context);
 
+      print(response.data);
+
       String token = (response as CustomerLoginResponse).token;
       dynamic user = (response as CustomerLoginResponse).user;
       user['token'] = token;
@@ -78,16 +80,9 @@ class _LoginPageState extends State<LoginPage> {
             key: _formKey,
             child: Column(
               children: [
-                TextInput(
-                    name: 'email',
-                    labelText: 'Email',
-                    controller: _emailController),
+                TextInput(name: 'email', labelText: 'Email', controller: _emailController),
                 Container(padding: const EdgeInsets.all(10)),
-                TextInput(
-                    name: 'password',
-                    labelText: 'Senha',
-                    controller: _passwordController,
-                    isSecret: true),
+                TextInput(name: 'password', labelText: 'Senha', controller: _passwordController, isSecret: true),
               ],
             ),
           ),
@@ -117,14 +112,11 @@ class _LoginPageState extends State<LoginPage> {
             Expanded(
               child: FilledButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(CustomColors.secondary),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                    backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     )),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(vertical: 19)),
+                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 19)),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -132,9 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   child: !isLoading
-                      ? const Text('Entrar',
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold))
+                      ? const Text('Entrar', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))
                       : LoadingSpinner(
                           size: 25,
                         )),

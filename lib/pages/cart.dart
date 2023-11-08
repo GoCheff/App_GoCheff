@@ -1,34 +1,79 @@
-import 'package:customer_app/pages/foodplate.dart';
-import 'package:customer_app/states/carts.dart';
+import 'package:customer_app/data/types.dart';
+import 'package:customer_app/services/customer.dart';
 import 'package:customer_app/states/user.dart';
 import 'package:customer_app/templates/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:customer_app/ui/data/custom_colors.dart';
 import '../utils/ellipsis_text.dart';
 
+class CartItem {
+  final String nomePrato;
+  final double precoPrato;
+  final int idPrato;
+  final String imageUrl;
+  final int cheffId;
+  int quantity;
+
+  CartItem(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, this.quantity, this.cheffId);
+}
+
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  const CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
-  List<FoodPlateArguments> items = [];
+  List<CartItem> carrinhoItens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    buscarCart();
+  }
+
+  buscarCart() async {
+    UserProvider userProvider = readUserProvider(context);
+    Response response = await CustomerService().getOrders(token: userProvider.user?.token ?? "");
+    if (response.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response.message),
+          backgroundColor: CustomColors.error,
+        ),
+      );
+    } else {
+      List<dynamic> carts = (response as CustomerGetOrdersResponse).carts;
+      if (carts.isNotEmpty) {
+        dynamic ultimoCarrinho = carts.last;
+
+        List<dynamic> cartItems = ultimoCarrinho['cartItems'];
+        carrinhoItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
+          Map<String, dynamic> foodPlate = item['foodPlate'];
+          int idPlate = foodPlate['id'];
+          String namePlate = foodPlate['name'];
+          int cheffId = foodPlate['cheffId'];
+          String imageUrlPlate = foodPlate['imageUrl'];
+          String pricePlate = foodPlate['price'].toString();
+          int quantity = item['quantity'];
+
+          double priceDoublePlate = double.parse(pricePlate);
+          return CartItem(namePlate, priceDoublePlate, idPlate, imageUrlPlate, quantity, cheffId);
+        }).toList();
+      }
+
+      setState(() {});
+    }
+  }
+
+  void removeItemCart(int id) {
+    carrinhoItens.removeWhere((item) => item.idPrato == id);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = readUserProvider(context);
-    CartState? cartState = userProvider.user?.carts?.last;
-    List<CartItem>? cartItens = cartState?.cartItems;
-
-    List<Widget> itemCarrinhoWidgets = [];
-    if (cartItens != null) {
-      for (CartItem cartItem in cartItens) {
-        itemCarrinhoWidgets.add(ItemCarrinho(cartItem.foodPlate?.name ?? "", cartItem.foodPlate?.price.toDouble() ?? 00,
-            cartItem.foodPlate?.id.toInt() ?? 0, cartItem.foodPlate?.imageUrl ?? ""));
-      }
-    }
     return AuthTemplate(
       currentRoute: 'Cart',
       title: ellipsisName("Carrinho"),
@@ -38,19 +83,24 @@ class _CartPageState extends State<CartPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.pan_tool_alt_rounded, //Alterar o icone
+                Icons.pan_tool_alt_rounded, //Alterar o ícone
                 size: 24,
                 color: Color.fromARGB(255, 160, 32, 32),
               ),
               SizedBox(width: 5),
-              Text("Deslize em um item para excuir"),
+              Text("Deslize em um item para excluir"),
             ],
           ),
           const SizedBox(height: 10),
           Expanded(
-              child: ListView(
-            children: itemCarrinhoWidgets,
-          )),
+            child: ListView(
+              children: carrinhoItens.map((item) {
+                return ItemCarrinho(item, () {
+                  removeItemCart(item.idPrato);
+                });
+              }).toList(),
+            ),
+          ),
           Container(
             margin: const EdgeInsets.only(bottom: 55.0),
             width: 300,
@@ -83,45 +133,59 @@ class _CartPageState extends State<CartPage> {
 }
 
 class ItemCarrinho extends StatefulWidget {
-  final String nomePrato;
-  final double precoPrato;
-  final int idPrato;
-  final String imageUrl;
-  const ItemCarrinho(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, {Key? key}) : super(key: key);
+  final CartItem item;
+  final Function onRemove;
+
+  const ItemCarrinho(this.item, this.onRemove, {Key? key}) : super(key: key);
 
   @override
   State<ItemCarrinho> createState() => _ItemCarrinho();
 }
 
 class _ItemCarrinho extends State<ItemCarrinho> {
-  int cont = 0;
+  atualizarItemCart(BuildContext context, CartItem cartItem) async {
+    UserProvider userProvider = readUserProvider(context);
+
+    Response response = await CustomerService().updateOrCreateCartItem(
+      token: userProvider.user?.token ?? "",
+      foodPlateId: cartItem.idPrato,
+      quantity: cartItem.quantity,
+      cheffId: cartItem.cheffId,
+      locale: "",
+    );
+
+    if (response.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response.message),
+          backgroundColor: CustomColors.error,
+        ),
+      );
+    } else {
+      setState(() {});
+    }
+  }
+
   double valorTotal = 0;
+
+  void removeItem() {
+    widget.onRemove();
+  }
+
   @override
   Widget build(BuildContext context) {
-    void removeItemCart(int id) {
-      UserProvider userProvider = readUserProvider(context);
-      List<CartState>? cartStateList = userProvider.user?.carts;
-
-      if (cartStateList != null && cartStateList.isNotEmpty) {
-        CartState lastCartState = cartStateList.last;
-
-        int indexToRemove = lastCartState.cartItems!.indexWhere((item) => item.id == id);
-
-        if (indexToRemove != -1) {
-          lastCartState.cartItems!.removeAt(indexToRemove);
-          userProvider.setCarts(cartStateList);
-        }
-      }
-    }
-
     return Dismissible(
-      key: Key(widget.idPrato.toString()),
+      key: Key(widget.item.idPrato.toString()),
       background: Container(
         color: CustomColors.white,
       ),
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
-          removeItemCart(widget.idPrato.toInt());
+          widget.item.quantity = 0;
+          atualizarItemCart(context, widget.item);
+          removeItem();
+
+          //Chamar função aqui
         }
       },
       child: Center(
@@ -143,7 +207,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                 child: Center(
                   child: CircleAvatar(
                     radius: 45,
-                    backgroundImage: NetworkImage(widget.imageUrl),
+                    backgroundImage: NetworkImage(widget.item.imageUrl),
                   ),
                 ),
               ),
@@ -152,42 +216,45 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                 children: [
                   Column(children: [
                     SizedBox(
-                        width: 100,
-                        child: Text(
-                          widget.nomePrato,
-                          style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
-                        )),
+                      width: 100,
+                      child: Text(
+                        widget.item.nomePrato,
+                        style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     SizedBox(
-                        width: 100,
-                        child: Text(
-                          "$valorTotal",
-                          style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
-                        ))
+                      width: 100,
+                      child: Text(
+                        "${widget.item.precoPrato * widget.item.quantity}",
+                        style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
+                      ),
+                    )
                   ]),
                   const SizedBox(width: 10),
                   Row(
                     children: [
                       IconButton(
-                          icon: const Icon(Icons.remove),
-                          onPressed: () {
-                            setState(() {
-                              if (cont > 0) {
-                                cont--;
-                                valorTotal = cont * widget.precoPrato;
-                              }
-                            });
-                          }),
+                        icon: const Icon(Icons.remove),
+                        onPressed: () {
+                          setState(() {
+                            if (widget.item.quantity > 1) {
+                              widget.item.quantity--;
+                              atualizarItemCart(context, widget.item);
+                            }
+                          });
+                        },
+                      ),
                       Text(
-                        (cont).toString(),
+                        (widget.item.quantity).toString(),
                         style: const TextStyle(fontSize: 16),
                       ),
                       IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
                           setState(() {
-                            cont++;
-                            valorTotal = cont * widget.precoPrato;
+                            widget.item.quantity++;
+                            atualizarItemCart(context, widget.item);
                           });
                         },
                       ),

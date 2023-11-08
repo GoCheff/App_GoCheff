@@ -1,3 +1,5 @@
+import 'package:customer_app/data/types.dart';
+import 'package:customer_app/services/customer.dart';
 import 'package:customer_app/states/carts.dart';
 import 'package:customer_app/states/cheffs.dart';
 import 'package:customer_app/states/user.dart';
@@ -14,54 +16,26 @@ class FoodPlatePage extends StatefulWidget {
 }
 
 class _FoodPlatePage extends State<FoodPlatePage> {
-  /*cartCreate(context) {
-    List<CartState>? cartState = [];
+  addItemCart(CartItem cartItem, int cheffId) async {
     UserProvider userProvider = readUserProvider(context);
-    cartState = userProvider.user?.carts;
 
-    cartState ??= [];
-    CartState cart = CartState(
-      createdAt: DateTime.now(),
-      customerId: 1,
-      eventDate: "Data Evento",
-      id: 1,
-      locale: "Local",
-      observation: "Obeservação",
-      phoneContact: "telefone para contato",
-      status: "Aberta",
-      updatedAt: DateTime.now(),
-      deletedAt: null,
-    );
-
-    cartState.add(cart);
-    userProvider.setCarts(cartState);
-  }*/
-
-  addItemCart(CartItem cartItem) {
-    UserProvider userProvider = readUserProvider(context);
-    //List<CartState>? cartStateList = userProvider.user?.carts;
-
-    // TODO: arrumar aqui
     Response response = await CustomerService().updateOrCreateCartItem(
       token: userProvider.user?.token ?? "",
       foodPlateId: cartItem.foodPlateId,
       quantity: cartItem.quantity,
-      cheffId: cartItem.cheffId,
-      locale: cartItem.locale,
+      cheffId: cheffId,
+      locale: "",
     );
 
-    if (cartStateList != null && cartStateList.isNotEmpty) {
-      CartState lastCartState = cartStateList.last;
-
-      if (lastCartState.cartItems == null) {
-        lastCartState.cartItems = [cartItem];
-      } else {
-        if (!lastCartState.cartItems!.any((item) => item.id == cartItem.id)) {
-          lastCartState.cartItems!.add(cartItem);
-        }
-      }
-
-      userProvider.setCarts(cartStateList);
+    if (response.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response.message),
+          backgroundColor: CustomColors.error,
+        ),
+      );
+    } else {
+      Navigator.of(context).pop();
     }
   }
 
@@ -209,10 +183,6 @@ class _FoodPlatePage extends State<FoodPlatePage> {
             height: 70,
             child: ElevatedButton(
               onPressed: () {
-                /*if (cartState == null && cartState?.last.status != "Aberta") {
-                  cartCreate(context);
-                }*/
-
                 CartItem cartItem = CartItem(
                     id: foodPlateArguments.foodPlate.id,
                     cartId: cartState?.last.id ?? 0,
@@ -220,10 +190,7 @@ class _FoodPlatePage extends State<FoodPlatePage> {
                     quantity: 1,
                     createdAt: DateTime.now(),
                     foodPlate: foodPlateArguments.foodPlate);
-
-                addItemCart(cartItem);
-
-                /*Navigator.of(context).pop();*/
+                addItemCart(cartItem, foodPlateArguments.cheffId);
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(CustomColors.secondary),

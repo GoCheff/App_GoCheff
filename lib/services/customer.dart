@@ -9,8 +9,7 @@ import 'package:http/http.dart' as http;
 class CustomerService {
   var baseUrl = '${Env.API_URL}/customers';
 
-  Future<Response> login(
-      {required String email, required String password}) async {
+  Future<Response> login({required String email, required String password}) async {
     var url = Uri.parse('$baseUrl/sign-in');
     var headers = makeBaseRequestHeaders();
     var body = jsonEncode({'email': email, 'password': password});
@@ -26,8 +25,7 @@ class CustomerService {
     return CustomerLoginResponse.fromJson(jsonDecode(response.body));
   }
 
-  Future<Response> signup(
-      {required String name, required String email, required String password}) async {
+  Future<Response> signup({required String name, required String email, required String password}) async {
     var url = Uri.parse('$baseUrl/sign-up');
     var headers = makeBaseRequestHeaders();
     var body = jsonEncode({'name': name, 'email': email, 'password': password, 'gender': 'preferNotToSay'});
@@ -58,16 +56,24 @@ class CustomerService {
     return CustomerAuthResponse.fromJson(jsonDecode(response.body));
   }
 
-  Future<Response> updateOrCreateCartItem({required String token, required int foodPlateId, required int quantity, required int cheffId, required String locale}) async {
+  Future<Response> updateOrCreateCartItem(
+      {required String token, required int foodPlateId, required int quantity, required int cheffId, required String locale}) async {
     var url = Uri.parse('$baseUrl/cart-items/$foodPlateId');
     var headers = makeBaseRequestHeaders(token: token);
 
     print(url);
+    final response = await http.put(url,
+        headers: headers,
+        body: jsonEncode({
+          "locale": "string",
+          "eventDate": "2023-11-08T00:55:13.157Z",
+          "phoneContact": "string",
+          "observation": "string",
+          "cheffId": cheffId,
+          "quantity": quantity
+        }));
 
     bool error = response.statusCode != 200;
-
-    final response = await http.put(url, headers: headers, body: jsonEncode({'quantity': quantity, 'cheffId': cheffId, 'locale': locale, 'eventDate': '2023-11-27', 'phoneContact': '', 'observation': ''}));
-
     if (error) {
       return ErrorResponseBody.fromJson(jsonDecode(response.body));
     }
@@ -115,16 +121,12 @@ class CustomerLoginResponse extends Response {
   late final dynamic user;
   late final String message;
 
-  CustomerLoginResponse(
-      {required data, bool error = false, required this.message})
-      : super(data: data, error: false, message: message) {
+  CustomerLoginResponse({required data, bool error = false, required this.message}) : super(data: data, error: false, message: message) {
     token = data['token'];
     user = data['user'];
   }
 
-  CustomerLoginResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
-      : super(data: json, error: error, message: json['message']) {
+  CustomerLoginResponse.fromJson(Map<String, dynamic> json, {bool error = false}) : super(data: json, error: error, message: json['message']) {
     token = json['data']['token'];
     user = json['data']['user'];
     message = json['message'];
@@ -134,14 +136,9 @@ class CustomerLoginResponse extends Response {
 class CustomerSignupResponse extends Response {
   late final String message;
 
-  CustomerSignupResponse(
-      {required data, bool error = false, required this.message})
-      : super(data: data, error: false, message: message) {
-  }
+  CustomerSignupResponse({required data, bool error = false, required this.message}) : super(data: data, error: false, message: message) {}
 
-  CustomerSignupResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
-      : super(data: json, error: error, message: json['message']) {
+  CustomerSignupResponse.fromJson(Map<String, dynamic> json, {bool error = false}) : super(data: json, error: error, message: json['message']) {
     message = json['message'];
   }
 }
@@ -149,14 +146,11 @@ class CustomerSignupResponse extends Response {
 class CustomerAuthResponse extends Response {
   late final dynamic user;
 
-  CustomerAuthResponse({required data, bool error = false, required message})
-      : super(data: data, error: false, message: message) {
+  CustomerAuthResponse({required data, bool error = false, required message}) : super(data: data, error: false, message: message) {
     user = data;
   }
 
-  CustomerAuthResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
-      : super(data: json, error: error, message: json['message']) {
+  CustomerAuthResponse.fromJson(Map<String, dynamic> json, {bool error = false}) : super(data: json, error: error, message: json['message']) {
     user = json['data'];
   }
 }
@@ -164,14 +158,11 @@ class CustomerAuthResponse extends Response {
 class CustomerUpdateOrCreateCartItemResponse extends Response {
   late final dynamic cartItem;
 
-  CustomerUpdateOrCreateCartItemResponse(
-      {required data, bool error = false, required message})
-      : super(data: data, error: false, message: message) {
+  CustomerUpdateOrCreateCartItemResponse({required data, bool error = false, required message}) : super(data: data, error: false, message: message) {
     cartItem = data;
   }
 
-  CustomerUpdateOrCreateCartItemResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
+  CustomerUpdateOrCreateCartItemResponse.fromJson(Map<String, dynamic> json, {bool error = false})
       : super(data: json, error: error, message: json['message']) {
     cartItem = json['data'];
   }
@@ -180,15 +171,11 @@ class CustomerUpdateOrCreateCartItemResponse extends Response {
 class CustomerGetOrdersResponse extends Response {
   late final List<dynamic> carts;
 
-  CustomerGetOrdersResponse(
-      {required data, bool error = false, required message})
-      : super(data: data, error: false, message: message) {
+  CustomerGetOrdersResponse({required data, bool error = false, required message}) : super(data: data, error: false, message: message) {
     carts = data;
   }
 
-  CustomerGetOrdersResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
-      : super(data: json, error: error, message: json['message']) {
+  CustomerGetOrdersResponse.fromJson(Map<String, dynamic> json, {bool error = false}) : super(data: json, error: error, message: json['message']) {
     carts = json['data'];
   }
 }
@@ -196,14 +183,11 @@ class CustomerGetOrdersResponse extends Response {
 class CustomerCreatePaymentResponse extends Response {
   late final String paymentLink;
 
-  CustomerCreatePaymentResponse(
-      {required data, bool error = false, required message})
-      : super(data: data, error: false, message: message) {
+  CustomerCreatePaymentResponse({required data, bool error = false, required message}) : super(data: data, error: false, message: message) {
     paymentLink = data['paymentLink'];
   }
 
-  CustomerCreatePaymentResponse.fromJson(Map<String, dynamic> json,
-      {bool error = false})
+  CustomerCreatePaymentResponse.fromJson(Map<String, dynamic> json, {bool error = false})
       : super(data: json, error: error, message: json['message']) {
     paymentLink = json['data']['paymentLink'];
   }
