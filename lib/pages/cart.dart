@@ -7,14 +7,14 @@ import 'package:customer_app/ui/data/custom_colors.dart';
 import '../utils/ellipsis_text.dart';
 
 class CartItem {
-  final String nomePrato;
-  final double precoPrato;
-  final int idPrato;
+  final String namePlate;
+  final double pricePlate;
+  final int idPlate;
   final String imageUrl;
   final int cheffId;
   int quantity;
 
-  CartItem(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, this.quantity, this.cheffId);
+  CartItem(this.namePlate, this.pricePlate, this.idPlate, this.imageUrl, this.quantity, this.cheffId);
 }
 
 class CartPage extends StatefulWidget {
@@ -25,15 +25,15 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  List<CartItem> carrinhoItens = [];
+  List<CartItem> cartItens = [];
 
   @override
   void initState() {
     super.initState();
-    buscarCart();
+    searchCart();
   }
 
-  buscarCart() async {
+  searchCart() async {
     UserProvider userProvider = readUserProvider(context);
     Response response = await CustomerService().getOrders(token: userProvider.user?.token ?? "");
     if (response.error) {
@@ -46,10 +46,10 @@ class _CartPageState extends State<CartPage> {
     } else {
       List<dynamic> carts = (response as CustomerGetOrdersResponse).carts;
       if (carts.isNotEmpty) {
-        dynamic ultimoCarrinho = carts.last;
+        dynamic lastCart = carts.last;
 
-        List<dynamic> cartItems = ultimoCarrinho['cartItems'];
-        carrinhoItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
+        List<dynamic> cartItems = lastCart['cartItems'];
+        cartItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
           Map<String, dynamic> foodPlate = item['foodPlate'];
           int idPlate = foodPlate['id'];
           String namePlate = foodPlate['name'];
@@ -68,7 +68,7 @@ class _CartPageState extends State<CartPage> {
   }
 
   void removeItemCart(int id) {
-    carrinhoItens.removeWhere((item) => item.idPrato == id);
+    cartItens.removeWhere((item) => item.idPlate == id);
     setState(() {});
   }
 
@@ -94,9 +94,9 @@ class _CartPageState extends State<CartPage> {
           const SizedBox(height: 10),
           Expanded(
             child: ListView(
-              children: carrinhoItens.map((item) {
-                return ItemCarrinho(item, () {
-                  removeItemCart(item.idPrato);
+              children: cartItens.map((item) {
+                return CardItem(item, () {
+                  removeItemCart(item.idPlate);
                 });
               }).toList(),
             ),
@@ -132,23 +132,23 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
-class ItemCarrinho extends StatefulWidget {
+class CardItem extends StatefulWidget {
   final CartItem item;
   final Function onRemove;
 
-  const ItemCarrinho(this.item, this.onRemove, {Key? key}) : super(key: key);
+  const CardItem(this.item, this.onRemove, {Key? key}) : super(key: key);
 
   @override
-  State<ItemCarrinho> createState() => _ItemCarrinho();
+  State<CardItem> createState() => _CardItem();
 }
 
-class _ItemCarrinho extends State<ItemCarrinho> {
-  atualizarItemCart(BuildContext context, CartItem cartItem) async {
+class _CardItem extends State<CardItem> {
+  updateItemCart(BuildContext context, CartItem cartItem) async {
     UserProvider userProvider = readUserProvider(context);
 
     Response response = await CustomerService().updateOrCreateCartItem(
       token: userProvider.user?.token ?? "",
-      foodPlateId: cartItem.idPrato,
+      foodPlateId: cartItem.idPlate,
       quantity: cartItem.quantity,
       cheffId: cartItem.cheffId,
       locale: "",
@@ -175,14 +175,14 @@ class _ItemCarrinho extends State<ItemCarrinho> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(widget.item.idPrato.toString()),
+      key: Key(widget.item.idPlate.toString()),
       background: Container(
         color: CustomColors.white,
       ),
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
           widget.item.quantity = 0;
-          atualizarItemCart(context, widget.item);
+          updateItemCart(context, widget.item);
           removeItem();
 
           //Chamar função aqui
@@ -218,7 +218,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        widget.item.nomePrato,
+                        widget.item.namePlate,
                         style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
                       ),
                     ),
@@ -226,7 +226,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        "${widget.item.precoPrato * widget.item.quantity}",
+                        "${widget.item.pricePlate * widget.item.quantity}",
                         style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
                       ),
                     )
@@ -240,7 +240,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                           setState(() {
                             if (widget.item.quantity > 1) {
                               widget.item.quantity--;
-                              atualizarItemCart(context, widget.item);
+                              updateItemCart(context, widget.item);
                             }
                           });
                         },
@@ -254,7 +254,7 @@ class _ItemCarrinho extends State<ItemCarrinho> {
                         onPressed: () {
                           setState(() {
                             widget.item.quantity++;
-                            atualizarItemCart(context, widget.item);
+                            updateItemCart(context, widget.item);
                           });
                         },
                       ),
