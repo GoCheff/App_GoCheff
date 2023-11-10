@@ -1,4 +1,5 @@
 import 'package:customer_app/data/types.dart';
+import 'package:customer_app/router/router.dart';
 import 'package:customer_app/services/customer.dart';
 import 'package:customer_app/states/user.dart';
 import 'package:customer_app/templates/auth.dart';
@@ -13,9 +14,11 @@ class CartItem {
   final String imageUrl;
   final int cheffId;
   int quantity;
+  final String status;
 
-  CartItem(this.namePlate, this.pricePlate, this.idPlate, this.imageUrl, this.quantity, this.cheffId);
-}
+
+ CartItem(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, this.quantity, this.cheffId, this.status);
+
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -46,10 +49,11 @@ class _CartPageState extends State<CartPage> {
     } else {
       List<dynamic> carts = (response as CustomerGetOrdersResponse).carts;
       if (carts.isNotEmpty) {
-        dynamic lastCart = carts.last;
+        dynamic ultimoCarrinho = carts.last;
+        String status = ultimoCarrinho["status"];
+        List<dynamic> cartItems = ultimoCarrinho['cartItems'];
+        carrinhoItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
 
-        List<dynamic> cartItems = lastCart['cartItems'];
-        cartItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
           Map<String, dynamic> foodPlate = item['foodPlate'];
           int idPlate = foodPlate['id'];
           String namePlate = foodPlate['name'];
@@ -59,7 +63,7 @@ class _CartPageState extends State<CartPage> {
           int quantity = item['quantity'];
 
           double priceDoublePlate = double.parse(pricePlate);
-          return CartItem(namePlate, priceDoublePlate, idPlate, imageUrlPlate, quantity, cheffId);
+          return CartItem(namePlate, priceDoublePlate, idPlate, imageUrlPlate, quantity, cheffId, status);
         }).toList();
       }
 
@@ -107,7 +111,8 @@ class _CartPageState extends State<CartPage> {
             height: 70,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                RouterContext router = RouterContext(context);
+                router.goTo("Order Details");
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
@@ -174,6 +179,10 @@ class _CardItem extends State<CardItem> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.item.status != "open") {
+      return SizedBox.shrink();
+    }
+
     return Dismissible(
       key: Key(widget.item.idPlate.toString()),
       background: Container(
@@ -184,8 +193,6 @@ class _CardItem extends State<CardItem> {
           widget.item.quantity = 0;
           updateItemCart(context, widget.item);
           removeItem();
-
-          //Chamar função aqui
         }
       },
       child: Center(

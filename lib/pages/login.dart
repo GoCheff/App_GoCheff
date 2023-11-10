@@ -46,8 +46,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       UserProvider userProvider = readUserProvider(context);
 
-      print(response.data);
-
       String token = (response as CustomerLoginResponse).token;
       dynamic user = (response as CustomerLoginResponse).user;
       user['token'] = token;
