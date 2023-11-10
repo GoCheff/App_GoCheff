@@ -81,6 +81,24 @@ class CustomerService {
     return CustomerUpdateOrCreateCartItemResponse.fromJson(jsonDecode(response.body));
   }
 
+  Future<Response> finalizeCart({
+    required String token,
+    required int idCart,
+  }) async {
+    var url = Uri.parse('$baseUrl/carts/$idCart');
+    var headers = makeBaseRequestHeaders(token: token);
+
+    print(url);
+    final response = await http.patch(url, headers: headers, body: jsonEncode({}));
+
+    bool error = response.statusCode != 200;
+    if (error) {
+      return ErrorResponseBody.fromJson(jsonDecode(response.body));
+    }
+
+    return CustomerUpdateOrCreateCartItemResponse.fromJson(jsonDecode(response.body));
+  }
+
   Future<Response> getOrders({required String token}) async {
     var url = Uri.parse('$baseUrl/carts');
     var headers = makeBaseRequestHeaders(token: token);
