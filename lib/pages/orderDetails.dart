@@ -49,10 +49,10 @@ class _OrderDetailsPage extends State<OrderDetailsPage> {
     } else {
       List<dynamic> carts = (response as CustomerGetOrdersResponse).carts;
       if (carts.isNotEmpty) {
-        dynamic ultimoCarrinho = carts.last;
-        idCart = ultimoCarrinho["id"];
+        dynamic lastCart = carts.last;
+        idCart = lastCart["id"];
 
-        List<dynamic> cartItems = ultimoCarrinho['cartItems'];
+        List<dynamic> cartItems = lastCart['cartItems'];
         carrinhoItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
           Map<String, dynamic> foodPlate = item['foodPlate'];
           int idPlate = foodPlate['id'];

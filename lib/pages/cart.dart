@@ -16,9 +16,8 @@ class CartItem {
   int quantity;
   final String status;
 
-
- CartItem(this.nomePrato, this.precoPrato, this.idPrato, this.imageUrl, this.quantity, this.cheffId, this.status);
-
+  CartItem(this.namePlate, this.pricePlate, this.idPlate, this.imageUrl, this.quantity, this.cheffId, this.status);
+}
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -49,11 +48,10 @@ class _CartPageState extends State<CartPage> {
     } else {
       List<dynamic> carts = (response as CustomerGetOrdersResponse).carts;
       if (carts.isNotEmpty) {
-        dynamic ultimoCarrinho = carts.last;
-        String status = ultimoCarrinho["status"];
-        List<dynamic> cartItems = ultimoCarrinho['cartItems'];
-        carrinhoItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
-
+        dynamic lastCart = carts.last;
+        String status = lastCart["status"];
+        List<dynamic> cartItems = lastCart['cartItems'];
+        cartItens = cartItems.where((item) => item['quantity'] > 0).map((item) {
           Map<String, dynamic> foodPlate = item['foodPlate'];
           int idPlate = foodPlate['id'];
           String namePlate = foodPlate['name'];
@@ -112,7 +110,9 @@ class _CartPageState extends State<CartPage> {
             child: ElevatedButton(
               onPressed: () {
                 RouterContext router = RouterContext(context);
-                router.goTo("Order Details");
+                if (cartItens.last.status == "open") {
+                  router.goTo("Order Details");
+                }
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(CustomColors.secondary),
