@@ -183,93 +183,96 @@ class _CardItem extends State<CardItem> {
       return SizedBox.shrink();
     }
 
-    return Dismissible(
-      key: Key(widget.item.idPlate.toString()),
-      background: Container(
-        color: CustomColors.white,
-      ),
-      onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {
-          widget.item.quantity = 0;
-          updateItemCart(context, widget.item);
-          removeItem();
-        }
-      },
-      child: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(35.0),
-            color: CustomColors.white,
-          ),
-          width: 350,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: Center(
-                  child: CircleAvatar(
-                    radius: 45,
-                    backgroundImage: NetworkImage(widget.item.imageUrl),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Dismissible(
+        key: Key(widget.item.idPlate.toString()),
+        background: Container(
+          color: CustomColors.white,
+        ),
+        onDismissed: (direction) {
+          if (direction == DismissDirection.endToStart) {
+            widget.item.quantity = 0;
+            updateItemCart(context, widget.item);
+            removeItem();
+          }
+        },
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(35.0),
+              color: CustomColors.white,
+            ),
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 45,
+                      backgroundImage: NetworkImage(widget.item.imageUrl),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Row(
-                children: [
-                  Column(children: [
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        widget.item.namePlate,
-                        style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
+                const SizedBox(width: 10),
+                Row(
+                  children: [
+                    Column(children: [
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          widget.item.namePlate,
+                          style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        "${widget.item.pricePlate * widget.item.quantity}",
-                        style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
-                      ),
-                    )
-                  ]),
-                  const SizedBox(width: 10),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: () {
-                          setState(() {
-                            if (widget.item.quantity > 1) {
-                              widget.item.quantity--;
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          "${widget.item.pricePlate * widget.item.quantity}",
+                          style: const TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis),
+                        ),
+                      )
+                    ]),
+                    const SizedBox(width: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove),
+                          onPressed: () {
+                            setState(() {
+                              if (widget.item.quantity > 1) {
+                                widget.item.quantity--;
+                                updateItemCart(context, widget.item);
+                              }
+                            });
+                          },
+                        ),
+                        Text(
+                          (widget.item.quantity).toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            setState(() {
+                              widget.item.quantity++;
                               updateItemCart(context, widget.item);
-                            }
-                          });
-                        },
-                      ),
-                      Text(
-                        (widget.item.quantity).toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          setState(() {
-                            widget.item.quantity++;
-                            updateItemCart(context, widget.item);
-                          });
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
+                            });
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

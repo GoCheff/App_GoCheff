@@ -148,31 +148,6 @@ class _FoodPlatePage extends State<FoodPlatePage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          'Ingredientes',
-                          style: TextStyle(
-                            color: CustomColors.black,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w200,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        Text(
-                          foodPlateArguments.foodPlate.description,
-                          style: const TextStyle(
-                            color: CustomColors.gray,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -185,7 +160,7 @@ class _FoodPlatePage extends State<FoodPlatePage> {
               onPressed: () {
                 CartItem cartItem = CartItem(
                     id: foodPlateArguments.foodPlate.id,
-                    cartId: cartState?.last.id ?? 0,
+                    cartId: 0,
                     foodPlateId: foodPlateArguments.foodPlate.id,
                     quantity: 1,
                     createdAt: DateTime.now(),

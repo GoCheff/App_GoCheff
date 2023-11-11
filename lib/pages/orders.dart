@@ -74,8 +74,7 @@ class _OrdersPageState extends State<OrdersPage> {
                   CarouselSlider(
                     items: user.carts!.map((cart) => CartCard(cart: cart)).toList(),
                     options: CarouselOptions(
-                      height: 150,
-                      viewportFraction: 1,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       enableInfiniteScroll: false,
                       enlargeCenterPage: false,
                       onPageChanged: (index, reason) {
@@ -177,8 +176,14 @@ class CartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          RouterContext router = RouterContext(context);
+
           if (cart.status == "approved") {
             createPayment(context, cart.id);
+          }
+
+          if (cart.status == "open") {
+            router.goTo('Cart');
           }
         },
         child: Card(
@@ -195,11 +200,6 @@ class CartCard extends StatelessWidget {
                   children: [
                     Text(
                       'Status: ${translateCartStatus(cart.status)}',
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    Text(
-                      "Local: ${cart.locale}",
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),

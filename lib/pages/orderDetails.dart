@@ -127,7 +127,7 @@ class _OrderDetailsPage extends State<OrderDetailsPage> {
                         const Padding(
                           padding: EdgeInsets.only(right: 16.0),
                           child: Text(
-                            'Pedido numero: ',
+                            'Pedido',
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
