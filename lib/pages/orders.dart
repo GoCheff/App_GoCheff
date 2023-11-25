@@ -44,6 +44,8 @@ class _OrdersPageState extends State<OrdersPage> {
         cartsState.add(CartState.fromJson(cart));
       }
 
+      cartsState = cartsState.reversed.toList();
+
       userProvider.setCarts(cartsState);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
