@@ -148,7 +148,6 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FilterInputs(),
               CarouselSlider(
                 items: [
                   ["glutenFree", "Gluten Free"],
@@ -226,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                         enableInfiniteScroll: false,
                       ),
                     ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 80),
             ],
           ),
         ),
@@ -358,10 +357,12 @@ class FilterInputs extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
           constraints: const BoxConstraints(minWidth: 1000),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Cidade',
-              border: OutlineInputBorder(),
+          child: const Text(
+            'Filtros',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
