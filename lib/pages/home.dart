@@ -19,13 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController cityController = TextEditingController();
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
-    getCheffs(context);
   }
 
   void getCheffs(context, {bool force = false}) async {
@@ -40,9 +39,11 @@ class _HomePageState extends State<HomePage> {
     });
 
     String token = (await localStorageRead('token'))!;
+    String city = cityController.text;
 
     Response response = await CheffService().getAll(
         token: token,
+        city: city,
         mainCuisine: user.mainCuisine,
         glutenFree: user.glutenFree,
         lactoseFree: user.lactoseFree,
@@ -148,6 +149,12 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              FilterInputs(
+                cityController: cityController,
+                onFilterChanged: (context, {bool force = false}) {
+                  getCheffs(context, force: force);
+                },
+              ),
               CarouselSlider(
                 items: [
                   ["glutenFree", "Gluten Free"],
@@ -225,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                         enableInfiniteScroll: false,
                       ),
                     ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -349,6 +356,11 @@ class _CuisineFilterItemState extends State<CuisineFilterItem> {
 }
 
 class FilterInputs extends StatelessWidget {
+  final TextEditingController cityController;
+  final Function(BuildContext, {bool force}) onFilterChanged;
+
+  FilterInputs({required this.cityController, required this.onFilterChanged});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -357,12 +369,15 @@ class FilterInputs extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
           constraints: const BoxConstraints(minWidth: 1000),
-          child: const Text(
-            'Filtros',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          child: TextField(
+            controller: cityController,
+            onChanged: (text) {
+              // Chamada da função fornecida no construtor
+              onFilterChanged(context, force: true);
+            },
+            decoration: const InputDecoration(
+              hintText: 'Cidade',
+              border: OutlineInputBorder(),
             ),
           ),
         ),
